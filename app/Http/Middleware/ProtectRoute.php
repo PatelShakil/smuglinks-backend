@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
+use App\Models\UserMst;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class ProtectRoute
         date_default_timezone_set("Asia/Kolkata");
 
         if (!str_contains($request->path(), "/common")) {
-            return User::where("uid", $request->header('uid'))->where("active", true)->exists() ? $next($request) : response()->json([
+            return UserMst::where("uid", $request->header('uid'))->where("active", true)->exists() ? $next($request) : response()->json([
                 "message" => "Unauthorized access",
                 "status" => false,
                 "data" => null,
