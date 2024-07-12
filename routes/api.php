@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => "api"], (function () {
 
-    Route::prefix('/common', function () {
+    Route::prefix('/common')->group(function () {
         Route::get('/test', function () {
             return response()->json(["status" => true, "data" => "SmugLinks API Started"]);
         });
@@ -14,6 +14,6 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/check-user-exists/{username}', [UserController::class, 'checkUserExists']);
     });
 
-    Route::prefix('/user', function () {
+    Route::prefix('/user')->group(function () {
     });
 }));
