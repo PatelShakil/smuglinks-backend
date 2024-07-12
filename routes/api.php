@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,7 @@ Route::group(['middleware' => "api"], (function () {
     });
 
     Route::prefix('/common', function () {
+        Route::get('/check-user-exists/{username}',[UserController::class,'checkUserExists']);
     });
 
     Route::prefix('/user', function () {
