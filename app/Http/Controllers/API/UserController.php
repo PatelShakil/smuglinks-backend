@@ -14,12 +14,14 @@ class UserController extends Controller
         if ($username != "") {
             return response()->json([
                 "status" => true,
+                "message"=>"User Found",
                 "data" => UserMst::where("username", $username)->exists()
             ]);
         } else {
             return response()->json([
                 "status" => false,
-                "data" => "Please enter valid username"
+                "message" =>"Please enter valid username",
+                "data" => null
             ]);
         }
     }
@@ -47,4 +49,6 @@ class UserController extends Controller
             ]);
         }
     }
+
+
 }
