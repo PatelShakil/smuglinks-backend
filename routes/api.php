@@ -15,5 +15,6 @@ Route::group(['middleware' => "api"], (function () {
     });
 
     Route::prefix('/user')->group(function () {
+        
     });
 }));

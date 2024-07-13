@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string("uid")->primary(true);
             $table->string("username")->unique();
             $table->string("email")->unique();
+            $table->string("phone");
             $table->string("password");
             $table->string("profile")->nullable();
             $table->boolean("active");
