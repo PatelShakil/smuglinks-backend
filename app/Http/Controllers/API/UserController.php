@@ -14,7 +14,7 @@ class UserController extends Controller
         if ($username != "") {
             return response()->json([
                 "status" => true,
-                "message"=>"User Found",
+                "message"=>"Response Loaded Successfully",
                 "data" => UserMst::where("username", $username)->exists()
             ]);
         } else {
