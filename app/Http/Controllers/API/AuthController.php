@@ -52,6 +52,48 @@ class AuthController extends Controller
     }
 
     public function doSignup(Request $request){
-        
+        $validator = Validator::make($request->all(),[
+            "email"=>"email|required",
+            "uid"=>"required",
+            "username"=>"required"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status"=>false,
+                "data"=>null,
+                "message"=>$validator->messages->first()
+            ]);
+        }
+
+        $user = new UserMst();
+        $user->email = $request->email;
+        $user->uid = $request->uid;
+        $user->username = $request->username;
+
+        DB::beginTransaction();
+        try {
+            $user->save();
+            DB::commit();
+            return response()->json([
+                "status"=>true,
+                "data"=>$user,
+                "message"=>"Account Created Successfully"
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollback();
+            return response()->json([
+                "status"=>false,
+                "data"=>null,
+                "message"=>$th->getMessage()
+
+            ]);
+        }
+
+
     }
+
+
+
 }
