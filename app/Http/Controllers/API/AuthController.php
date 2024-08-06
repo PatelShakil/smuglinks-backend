@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function doLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "email" => $request->email
+            "email" => "required"
         ]);
 
         if ($validator->fails()) {
@@ -22,7 +22,7 @@ class AuthController extends Controller
                 "status" => false,
                 "data" => null,
                 "message" => $validator->errors()->first()
-            ], 400);
+            ]);
         }
 
         $user = UserMst::where("email", $request->email)
