@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("type");
             $table->string("image");
             $table->boolean("enabled");
+            $table->integer("priority")->default(1);
             $table->timestamps();
         });
     }
