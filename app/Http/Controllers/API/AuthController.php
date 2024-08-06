@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserMst;
+use App\Models\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -75,6 +76,9 @@ class AuthController extends Controller
         DB::beginTransaction();
         try {
             $user->save();
+            $setting = new UserSetting();
+            $setting->uid = $user->uid;
+            $setting->save();
             DB::commit();
             return response()->json([
                 "status"=>true,
