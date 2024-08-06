@@ -19,11 +19,15 @@ class ProtectRoute
         date_default_timezone_set("Asia/Kolkata");
 
         if (!str_contains($request->path(), "/common")) {
-            return UserMst::where("uid", $request->header('uid'))->where("active", true)->exists() ? $next($request) : response()->json([
-                "message" => "Unauthorized access",
-                "status" => false,
-                "data" => null,
-            ]);
+            if (UserMst::where("uid", $request->header('uid'))->where("active", true)->exists()) {
+                return $next($request);
+            } else {
+                return response()->json([
+                    "message" => "Unauthorized access",
+                    "status" => false,
+                    "data" => null,
+                ]);
+            }
         } else {
             return $next($request);
         }
