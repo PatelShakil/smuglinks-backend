@@ -1,0 +1,17 @@
+BASE URL = https://api.smuglinks.com/api
+
+- this will always be the same for all apis
+- api with '/common' can be directly called without putting uid inside header
+
+1> /common/check-user-exists/1
+where 1 = username
+response >
+{
+    "status": true,
+    "message": "Response Loaded Successfully",
+    "data": false
+}
+
+if true then username occupied else username available
+
+2>
