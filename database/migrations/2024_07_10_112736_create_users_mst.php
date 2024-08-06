@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users_mst', function (Blueprint $table) {
             $table->string("uid")->primary(true);
             $table->string("username")->unique();
+            $table->string("name")->nullable();
             $table->string("email")->unique();
             $table->string("phone")->nullable();
             $table->string("profile")->nullable();
