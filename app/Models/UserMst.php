@@ -14,7 +14,7 @@ class UserMst extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'uid', 'username', 'email', 'profile', 'active'
+        'uid', 'username','name', 'email', 'profile', 'active'
     ];
 
     public function settings()
