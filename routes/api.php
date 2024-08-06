@@ -18,6 +18,6 @@ Route::group(['middleware' => "api"], (function () {
 
     Route::prefix('/user')->group(function () {
         Route::post('/login',[AuthController::class,'doLogin']);
-        Route::post('/update-yourself',[AuthController::class,'update']);
+        Route::post('/update-yourself',[UserController::class,'update']);
     });
 }));
