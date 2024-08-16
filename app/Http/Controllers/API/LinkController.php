@@ -32,7 +32,7 @@ class LinkController extends Controller
         $link = new Link();
         $link->name = $request->title;
         $link->url = $request->url;
-        $link->is_classic = $request->is_classic;
+        $link->is_classic =  boolval($request->is_classic);
         try{
             DB::beginTransaction();
             $link->enabled=true;
@@ -49,7 +49,7 @@ class LinkController extends Controller
             DB::rollback();
             return response()->json([
                 "status" => false,
-                "data" => $e,
+                "data" => $e->getMessage(),
                 "message" => "Error occurred while adding link"
             ]);
         }
