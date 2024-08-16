@@ -74,3 +74,64 @@ response >
     "updated_at": "2024-08-06T13:07:05.000000Z"
   }
 }
+
+5> /link/add
+method = POST
+parameters >
+title,url,is_classic
+(uid will be present in header)
+response >
+{
+  "status": true,
+  "data": {
+    "name": "SmugLinks",
+    "url": "https://smuglinks.com",
+    "is_classic": true,
+    "enabled": true,
+    "type": "normal",
+    "uid": "1234",
+    "updated_at": "2024-08-16T03:59:33.000000Z",
+    "created_at": "2024-08-16T03:59:33.000000Z",
+    "id": 2
+  },
+  "message": "Link added successfully"
+}
+
+6 /link/get-all
+method = GET
+(uid will be present in header)
+response > 
+{
+  "status": true,
+  "data": [
+    {
+      "id": 1,
+      "uid": "1234",
+      "name": "ABC",
+      "type": "normal",
+      "image": null,
+      "enabled": 1,
+      "url": "https://smuglinks.com",
+      "is_classic": 1,
+      "priority": 1,
+      "created_at": "2024-08-16T03:57:23.000000Z",
+      "updated_at": "2024-08-16T03:57:23.000000Z",
+      "analytics": null
+    },
+    {
+      "id": 2,
+      "uid": "1234",
+      "name": "SmugLinks",
+      "type": "normal",
+      "image": null,
+      "enabled": 1,
+      "url": "https://smuglinks.com",
+      "is_classic": 1,
+      "priority": 1,
+      "created_at": "2024-08-16T03:59:33.000000Z",
+      "updated_at": "2024-08-16T03:59:33.000000Z",
+      "analytics": null
+    }
+  ],
+  "message": "Links fetched successfully"
+}
