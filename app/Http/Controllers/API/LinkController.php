@@ -55,4 +55,27 @@ class LinkController extends Controller
         }
     }
 
+    public function getAllLinks($request){
+        $uid = $request->header('uid');
+
+        $links = Link::where('uid', $uid)->with("analytics")->get();
+
+        if($links != null){
+            return response()->json([
+                "status" => true,
+                "data" => $links,
+                "message" => "Links fetched successfully"
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => "No links found"
+            ]);
+        }
+
+    }
+
+
+
 }

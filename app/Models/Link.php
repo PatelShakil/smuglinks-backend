@@ -24,4 +24,7 @@ class Link extends Model
     {
         return $this->hasOne(LinkAnalytics::class, 'link_id', 'id');
     }
+
+
+    
 }
