@@ -12,7 +12,7 @@ class Link extends Model
     protected $table = 'links_mst';
 
     protected $fillable = [
-        'uid', 'name', 'type', 'image', 'enabled'
+        'uid', 'name', 'type', 'image', 'enabled','url','priority','is_classic'
     ];
 
     public function user()

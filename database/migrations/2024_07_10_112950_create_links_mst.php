@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string("type");
             $table->string("image");
             $table->boolean("enabled");
+            $table->string("url");
+            $table->boolean("is_classic")->default(true);
             $table->integer("priority")->default(1);
             $table->timestamps();
         });
