@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class LinkController extends Controller
 {
     
-    public function addLink($request){
+    public function addLink(Request $request){
         $validator = Validator::make($request->all(),[
             "title"=>"string|required",
             "url"=>"string|url|required",
@@ -55,7 +55,7 @@ class LinkController extends Controller
         }
     }
 
-    public function getAllLinks($request){
+    public function getAllLinks(Request $request){
         $uid = $request->header('uid');
 
         $links = Link::where('uid', $uid)->with("analytics")->get();
