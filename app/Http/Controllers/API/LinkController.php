@@ -49,7 +49,7 @@ class LinkController extends Controller
             DB::rollback();
             return response()->json([
                 "status" => false,
-                "data" => null,
+                "data" => $e,
                 "message" => "Error occurred while adding link"
             ]);
         }
