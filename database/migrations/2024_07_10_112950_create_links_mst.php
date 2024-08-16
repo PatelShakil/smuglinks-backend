@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign("uid")->references("uid")->on("users_mst")->cascadeOnDelete();
             $table->string("name");
             $table->string("type");
-            $table->string("image");
-            $table->boolean("enabled");
+            $table->string("image")->nullable();
+            $table->boolean("enabled")->default(true);
             $table->string("url");
             $table->boolean("is_classic")->default(true);
             $table->integer("priority")->default(1);
