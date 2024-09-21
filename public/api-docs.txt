@@ -195,4 +195,17 @@ response > {
 method = POST
 parameters >
 plan_id
-response > 
+response > {
+  "status": true,
+  "message": "Subscribed Plan Successfully",
+  "data": {
+    "plan_id": "1",
+    "order_id": "4Q3Nnf6PC37zdySTadwsg7KC5E99qWMx",
+    "enabled": true,
+    "start_timestamp": "2024-09-21T18:24:11.129787Z",
+    "uid": "Mv8VU1ChWG2tS9Wj06YFgmWrrWAWgO6Dkt8SAi2PCd3MVmZgZkqk5qT0d4DSnwmr",
+    "updated_at": "2024-09-21T18:24:11.000000Z",
+    "created_at": "2024-09-21T18:24:11.000000Z",
+    "id": 1
+  }
+}
