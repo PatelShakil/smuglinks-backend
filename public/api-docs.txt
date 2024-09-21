@@ -32,7 +32,7 @@ response >
   "message": "Account Created Successfully"
 }
 
-3> /user/update
+3> /user/update-yourself
 method = POST
 parameters >
 name,category
