@@ -15,11 +15,13 @@ class AuthController extends Controller
 {
     public function doLogin(Request $request)
     {
+        // Validate incoming request data
         $validator = Validator::make($request->all(), [
-            "email" => "required",
-            "password"=>"required|min:8"
+            "email" => "required|email",
+            "password" => "required|min:8"
         ]);
 
+        // If validation fails, return the first error
         if ($validator->fails()) {
             return response()->json([
                 "status" => false,
@@ -28,12 +30,12 @@ class AuthController extends Controller
             ]);
         }
 
-        $user = UserMst::where("email", $request->email)
-            ->where("password", $request->password)
-            ->get()
-            ->first();
+        // Find the user by email
+        $user = UserMst::where("email", $request->email)->first();
 
-        if ($user != null) {
+        // Check if user exists and the password matches
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Check if the user is active
             if ($user->active) {
                 return response()->json([
                     "status" => true,
