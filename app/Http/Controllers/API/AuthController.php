@@ -116,6 +116,64 @@ class AuthController extends Controller
         }
     }
 
+    public function resetPassword(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            "current_password" => "required|min:8",
+            "new_password" => "required|min:8" // 'confirmed' ensures password_confirmation is provided and matches
+        ]);
+
+        // If validation fails, return the first error
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        // Retrieve the uid from the request header
+        $uid = $request->header('uid');
+
+        if (!$uid) {
+            return response()->json([
+                "status" => false,
+                "message" => "UID is required in the header",
+                "data" => null
+            ]);
+        }
+
+        // Find the user by UID
+        $user = UserMst::where('uid', $uid)->first();
+
+        if (!$user) {
+            return response()->json([
+                "status" => false,
+                "message" => "User not found",
+                "data" => null
+            ]);
+        }
+
+        // Verify the current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                "status" => false,
+                "message" => "Current password is incorrect",
+                "data" => null
+            ]);
+        }
+
+        // Update the password with the new one (hashed)
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Password has been reset successfully",
+            "data" => null
+        ]);
+    }
 
 
 }

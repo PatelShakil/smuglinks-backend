@@ -20,6 +20,7 @@ Route::group(['middleware' => "api"], (function () {
     Route::prefix('/user')->group(function () {
         Route::post('/update-yourself',[UserController::class,'update']);
         Route::get('/details',[UserController::class, 'getUserDetails']);
+        Route::post('/reset-password',[UserController::class, 'resetPassword']);
     });
     Route::prefix('link')->group(function (){
         Route::post('/add',[LinkController::class,'addLink']);
