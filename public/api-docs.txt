@@ -173,3 +173,26 @@ response > {
     "updated_at": "2024-09-21T17:27:15.000000Z"
   }
 }
+9> /subscription/get-all
+method:GET
+response > {
+  "status": true,
+  "message": "Plans Loaded Successfully",
+  "data": [
+    {
+      "id": 1,
+      "type": "Starter",
+      "name": "Free",
+      "description": "This is free plan with this you can do severel things.",
+      "price": 0,
+      "duration": 7,
+      "created_at": "2024-09-21T18:12:19.000000Z",
+      "updated_at": "2024-09-21T18:12:19.000000Z"
+    }
+  ]
+}
+10> /user/subscribe-to-plan
+method = POST
+parameters >
+plan_id
+response > 

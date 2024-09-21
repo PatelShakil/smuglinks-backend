@@ -22,6 +22,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/update-yourself', [UserController::class, 'update']);
         Route::get('/details', [UserController::class, 'getUserDetails']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+        Route::post('/subscribe-to-plan',[SubscriptionController::class,'subscribePlan']);
     });
 
     Route::prefix('/admin')->group(function (){
