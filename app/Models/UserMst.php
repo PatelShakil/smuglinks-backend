@@ -17,6 +17,10 @@ class UserMst extends Model
         'uid', 'username','name', 'email', 'profile', 'active'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
+
     public function settings()
     {
         return $this->hasOne(UserSetting::class, 'uid', 'uid');
