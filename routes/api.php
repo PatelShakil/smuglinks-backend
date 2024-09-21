@@ -13,12 +13,11 @@ Route::group(['middleware' => "api"], (function () {
             return response()->json(["status" => true, "data" => null,"message"=> "SmugLinks API Started"]);
         });
         Route::post('/signup',[AuthController::class,'doSignup']);
-
+        Route::post('/login',[AuthController::class,'doLogin']);
         Route::get('/check-user-exists/{username}', [UserController::class, 'checkUserExists']);
     });
 
     Route::prefix('/user')->group(function () {
-        Route::post('/login',[AuthController::class,'doLogin']);
         Route::post('/update-yourself',[UserController::class,'update']);
         Route::get('/details',[UserController::class, 'getUserDetails']);
     });
