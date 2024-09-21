@@ -153,3 +153,23 @@ response >
     "updated_at": "2024-08-06T13:07:05.000000Z"
   }
 }
+8> /user/reset-password
+method : POST
+parameter >
+current_password,new_password
+(uid will be present in the header)
+response > {
+  "status": true,
+  "message": "Logged in successfully",
+  "data": {
+    "uid": "Mv8VU1ChWG2tS9Wj06YFgmWrrWAWgO6Dkt8SAi2PCd3MVmZgZkqk5qT0d4DSnwmr",
+    "username": "testuser",
+    "name": null,
+    "email": "testuser@gmail.com",
+    "phone": null,
+    "profile": null,
+    "active": 1,
+    "created_at": "2024-09-21T17:05:26.000000Z",
+    "updated_at": "2024-09-21T17:27:15.000000Z"
+  }
+}
