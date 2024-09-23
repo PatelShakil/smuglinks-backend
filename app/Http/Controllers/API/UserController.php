@@ -113,7 +113,7 @@ class UserController extends Controller
         if($user){
 
             if($user->profile){
-                $filePath = basename($user->profile);
+                $filePath = __DIR__ + "public/storage/profiles" + basename($user->profile);
                 echo $filePath;
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
