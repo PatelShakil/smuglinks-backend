@@ -114,6 +114,7 @@ class UserController extends Controller
 
             if($user->profile){
                 $filePath = basename($user->profile);
+                echo $filePath;
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
                 }
