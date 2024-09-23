@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LinkController;
+use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add-profile-image',[UserController::class, 'addProfileImage']);
         Route::get('/remove-profile-image',[UserController::class, 'deleteProfileImage']);
         Route::post('/add-title-bio',[UserController::class, 'addTitleBio']);
+        Route::get('/theme/get-all',[ThemeController::class,'getAllTheme']);
     });
 
     Route::prefix('/admin')->group(function (){
