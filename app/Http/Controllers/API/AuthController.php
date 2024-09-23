@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\UserMst;
 use App\Models\UserSetting;
+use App\Models\WebConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +94,8 @@ class AuthController extends Controller
             $setting = new UserSetting();
             $setting->uid = $user->uid;
             $setting->save();
+            // $webConfig =new WebConfig();
+            // $webConfig
 
             // Commit the transaction
             DB::commit();

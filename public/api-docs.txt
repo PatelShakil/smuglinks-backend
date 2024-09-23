@@ -257,12 +257,14 @@ response > {
         "updated_at": "2024-09-23T18:10:00.000000Z"
     }
 }
+***// -> APIs was developed and tested ***
 
-profile get
+//profile get
 //add profile image
 //remove profile image
 //add title,bio
-theme get,
+//theme get,
+//theme select,
 background bg-type 1,2,3
 button type,bordertyhpe,curvetype,fontcolor,btncolor
 get font
