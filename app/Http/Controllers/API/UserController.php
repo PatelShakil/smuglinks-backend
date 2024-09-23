@@ -95,18 +95,19 @@ class UserController extends Controller
     }
 
     public function addProfileImage(Request $request){
-        $validator = Validator::make($request->all(),[
-            'image' => 'required|image|max:2048', // Validate the image file
-        ]);
+        // $validator = Validator::make($request->file(),[
+        //     'image' => 'required|image|max:2048', // Validate the image file
+        // ]);
 
-        if($validator->fails()){
+        if($request->file('image') == null){
             return response()->json([
-                "message" => $validator->errors()->first(),
+                "message" => "Image is Required",
                 "status" => false,
                 "data" => null
             ]);
         }
 
+    
         $imagePath = $request->file('image')->store('public/images/profiles');
         $user = UserMst::where("uid",$request->header("uid"))->first();
         if($user){
