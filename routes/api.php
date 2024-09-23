@@ -23,6 +23,8 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/details', [UserController::class, 'getUserDetails']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
         Route::post('/subscribe-to-plan',[SubscriptionController::class,'subscribePlan']);
+        Route::post('/add-profile-image',[UserController::class, 'addProfileImage']);
+        Route::get('/remove-profile-image',[UserController::class, 'deleteProfileImage']);
     });
 
     Route::prefix('/admin')->group(function (){

@@ -93,4 +93,49 @@ class UserController extends Controller
             "message"=>"User Details Updated Successfully"
         ]);
     }
+
+    public function addProfileImage(Request $request){
+        $validator = Validator::make($request->all(),[
+            'image' => 'required|image|max:2048', // Validate the image file
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "message" => $validator->errors()->first(),
+                "status" => false,
+                "data" => null
+            ]);
+        }
+
+        $imagePath = $request->file('image')->store('public/images/profiles');
+        $user = UserMst::where("uid",$request->header("uid"))->first();
+        if($user){
+
+            if($user->profile){
+                $filePath = public_path(str_replace("public/storage","public",basename($user->profile_pic)));
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Delete the file
+                }
+            }
+
+
+            $user->profile = str_replace("public", "public/storage", $imagePath);
+            $user->save();
+            return response()->json([
+                "message" => "Profile Updated successfully",
+                "status" => true,
+                "data" => []
+            ]);
+        }else{
+            return response()->json([
+                "message" => "User Not Found",
+                "status" => false,
+                "data" => null
+            ]);
+        }
+    }
+
+    public function deleteProfileImage(Request $request){
+        
+    }
 }
