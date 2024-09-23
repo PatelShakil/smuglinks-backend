@@ -113,7 +113,7 @@ class UserController extends Controller
         if($user){
 
             if($user->profile){
-                $filePath = public_path(str_replace("public","public",basename($user->profile_pic)));
+                $filePath = basename($user->profile);
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
                 }
