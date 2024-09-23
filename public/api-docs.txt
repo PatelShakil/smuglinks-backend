@@ -209,3 +209,13 @@ response > {
     "id": 1
   }
 }
+
+profile get
+add profile image
+remove profile image
+add title,bio
+theme get,
+background bg-type 1,2,3
+button type,bordertyhpe,curvetype,fontcolor,btncolor
+get font
+set font font_id,font_color

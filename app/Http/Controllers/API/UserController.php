@@ -29,7 +29,9 @@ class UserController extends Controller
 
     public function getUserDetails(Request $request)
     {
-        $user = UserMst::where("uid", $request->header("uid"))->first();
+        $user = UserMst::where("uid", $request->header("uid"))
+        ->with('settings')
+        ->first();
 
         if ($user != null) {
             if ($user->active) {
