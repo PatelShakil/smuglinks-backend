@@ -240,10 +240,28 @@ response : {
     "data": []
 }
 
+13> /user/add-title-bio
+method = POST
+parameters : 
+title,bio
+response > {
+    "status": true,
+    "message": "Title and Bio updated !!!",
+    "data": {
+        "id": 1,
+        "uid": "Mv8VU1ChWG2tS9Wj06YFgmWrrWAWgO6Dkt8SAi2PCd3MVmZgZkqk5qT0d4DSnwmr",
+        "title": "this is title",
+        "bio": "this is bio sample",
+        "category": "Engineer",
+        "created_at": "2024-09-21T17:05:26.000000Z",
+        "updated_at": "2024-09-23T18:10:00.000000Z"
+    }
+}
+
 profile get
 //add profile image
 //remove profile image
-add title,bio
+//add title,bio
 theme get,
 background bg-type 1,2,3
 button type,bordertyhpe,curvetype,fontcolor,btncolor
