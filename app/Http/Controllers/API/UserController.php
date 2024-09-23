@@ -108,7 +108,7 @@ class UserController extends Controller
         }
 
     
-        $imagePath = $request->file('image')->store('public/images/profiles');
+        $imagePath = $request->file('image')->store('public/profiles');
         $user = UserMst::where("uid",$request->header("uid"))->first();
         if($user){
 
