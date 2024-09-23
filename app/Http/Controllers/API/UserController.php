@@ -114,7 +114,6 @@ class UserController extends Controller
 
             if($user->profile){
                 $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/profiles/" . basename($user->profile);
-                echo $filePath;
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
                 }
