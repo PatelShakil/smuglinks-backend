@@ -222,6 +222,24 @@ response > {
   }
 }
 
+11> /user/add-profile-image
+method = POST
+parameters :
+image
+response > {
+    "message": "Profile Updated successfully",
+    "status": true,
+    "data": []
+}
+
+12> /user/remove-profile-image
+method = GET
+response : {
+    "message": "Profile Updated successfully",
+    "status": true,
+    "data": []
+}
+
 profile get
 add profile image
 remove profile image
