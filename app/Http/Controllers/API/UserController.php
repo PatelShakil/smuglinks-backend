@@ -15,13 +15,13 @@ class UserController extends Controller
         if ($username != "") {
             return response()->json([
                 "status" => true,
-                "message"=>"Response Loaded Successfully",
+                "message" => "Response Loaded Successfully",
                 "data" => UserMst::where("username", $username)->exists()
             ]);
         } else {
             return response()->json([
                 "status" => false,
-                "message" =>"Please enter valid username",
+                "message" => "Please enter valid username",
                 "data" => null
             ]);
         }
@@ -30,8 +30,8 @@ class UserController extends Controller
     public function getUserDetails(Request $request)
     {
         $user = UserMst::where("uid", $request->header("uid"))
-        ->with('settings')
-        ->first();
+            ->with('settings')
+            ->first();
 
         if ($user != null) {
             if ($user->active) {
@@ -53,34 +53,35 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request){
-        $user = UserMst::where("uid",$request->header("uid"))->first();
-        if($user == null){
+    public function update(Request $request)
+    {
+        $user = UserMst::where("uid", $request->header("uid"))->first();
+        if ($user == null) {
             return response()->json([
-                "status"=>false,
-                "data"=>null,
-                "message"=>"User Not Found"
+                "status" => false,
+                "data" => null,
+                "message" => "User Not Found"
             ]);
         }
 
-        $validator = Validator::make($request->all(),[
-            "name"=>"required",
-            "category"=>"required"
+        $validator = Validator::make($request->all(), [
+            "name" => "required",
+            "category" => "required"
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                "status"=>false,
-                "data"=>null,
-                "message"=>$validator->errors()->first()
+                "status" => false,
+                "data" => null,
+                "message" => $validator->errors()->first()
             ]);
         }
 
         $user->name = $request->name;
-        $setting = UserSetting::where("uid",$user->uid)->first();
-        if($setting != null){
+        $setting = UserSetting::where("uid", $user->uid)->first();
+        if ($setting != null) {
             $setting->category = $request->category;
-        }else{
+        } else {
             $setting = new UserSetting();
             $setting->uid = $user->uid;
             $setting->category = $request->category;
@@ -88,18 +89,19 @@ class UserController extends Controller
         $user->save();
         $setting->save();
         return response()->json([
-            "status"=>true,
-            "data"=>$user,
-            "message"=>"User Details Updated Successfully"
+            "status" => true,
+            "data" => $user,
+            "message" => "User Details Updated Successfully"
         ]);
     }
 
-    public function addProfileImage(Request $request){
+    public function addProfileImage(Request $request)
+    {
         // $validator = Validator::make($request->file(),[
         //     'image' => 'required|image|max:2048', // Validate the image file
         // ]);
 
-        if($request->file('image') == null){
+        if ($request->file('image') == null) {
             return response()->json([
                 "message" => "Image is Required",
                 "status" => false,
@@ -107,12 +109,12 @@ class UserController extends Controller
             ]);
         }
 
-    
-        $imagePath = $request->file('image')->store('public/profiles');
-        $user = UserMst::where("uid",$request->header("uid"))->first();
-        if($user){
 
-            if($user->profile){
+        $imagePath = $request->file('image')->store('public/profiles');
+        $user = UserMst::where("uid", $request->header("uid"))->first();
+        if ($user) {
+
+            if ($user->profile) {
                 $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/profiles/" . basename($user->profile);
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
@@ -127,7 +129,7 @@ class UserController extends Controller
                 "status" => true,
                 "data" => []
             ]);
-        }else{
+        } else {
             return response()->json([
                 "message" => "User Not Found",
                 "status" => false,
@@ -136,7 +138,36 @@ class UserController extends Controller
         }
     }
 
-    public function deleteProfileImage(Request $request){
-        
+    public function deleteProfileImage(Request $request)
+    {
+        $user = UserMst::where("uid", $request->header("uid"))->first();
+        if ($user) {
+            if ($user->profile) {
+                $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/profiles/" . basename($user->profile);
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Delete the file
+                }
+
+                $user->profile = null;
+                $user->save();
+                return response()->json([
+                    "message" => "Profile Updated successfully",
+                    "status" => true,
+                    "data" => []
+                ]);
+            } else {
+                return response()->json([
+                    "message" => "Profile Image Not exists",
+                    "status" => false,
+                    "data" => []
+                ]);
+            }
+        } else {
+            return response()->json([
+                "message" => "User Not Found",
+                "status" => false,
+                "data" => null
+            ]);
+        }
     }
 }
