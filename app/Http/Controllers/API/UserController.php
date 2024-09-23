@@ -170,4 +170,42 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function addTitleBio(Request $request){
+        $validator = Validator::make($request->all(),[
+            "title" => "required",
+            "bio" =>"required"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status"=>false,
+                "message"=>$validator->errors()->first(),
+                "data"=>null
+            ]);
+        }
+
+        $user = UserSetting::where("uid",$request->header("uid"))->first();
+
+        if($user){
+            $user->title = $request->title;
+            $user->bio = $request->bio;
+            $user->save();
+            return response()->json([
+                "status"=>true,
+                "message"=>"Title and Bio updated !!!",
+                "data" => $user
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "message" => "User Not Found",
+                "data" => null
+            ]);
+        }
+
+
+
+    }
+
 }

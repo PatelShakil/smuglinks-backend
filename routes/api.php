@@ -25,6 +25,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/subscribe-to-plan',[SubscriptionController::class,'subscribePlan']);
         Route::post('/add-profile-image',[UserController::class, 'addProfileImage']);
         Route::get('/remove-profile-image',[UserController::class, 'deleteProfileImage']);
+        Route::post('/add-title-bio',[UserController::class, 'addTitleBio']);
     });
 
     Route::prefix('/admin')->group(function (){

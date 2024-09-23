@@ -241,8 +241,8 @@ response : {
 }
 
 profile get
-add profile image
-remove profile image
+//add profile image
+//remove profile image
 add title,bio
 theme get,
 background bg-type 1,2,3
