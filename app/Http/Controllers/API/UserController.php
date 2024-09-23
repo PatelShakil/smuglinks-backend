@@ -108,12 +108,12 @@ class UserController extends Controller
         }
 
     
-        $imagePath = $request->file('image')->store('images/profiles');
+        $imagePath = $request->file('image')->store('public/images/profiles');
         $user = UserMst::where("uid",$request->header("uid"))->first();
         if($user){
 
             if($user->profile){
-                $filePath = public_path(str_replace("public/storage","public",basename($user->profile_pic)));
+                $filePath = public_path(str_replace("public","public",basename($user->profile_pic)));
                 if (file_exists($filePath)) {
                     unlink($filePath); // Delete the file
                 }
