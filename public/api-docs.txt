@@ -349,6 +349,89 @@ response : {
     "status": true
 }
 
+18> /user/fonts/get-all
+method : GET
+response : {
+    "message": "Font Loaded",
+    "status": true,
+    "data": [
+        {
+            "id": 1,
+            "type": "classic",
+            "name": "Poppins",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 2,
+            "type": "classic",
+            "name": "Jost",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 3,
+            "type": "classic",
+            "name": "Montserrat",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 4,
+            "type": "classic",
+            "name": "Sora",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 5,
+            "type": "classic",
+            "name": "Georgia",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 6,
+            "type": "classic",
+            "name": "Arapey",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 7,
+            "type": "classic",
+            "name": "Alice",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 8,
+            "type": "classic",
+            "name": "Ubuntu",
+            "enabled": 1,
+            "created_at": null,
+            "updated_at": null
+        }
+    ]
+}
+
+19> /user/fonts/set-font
+method : POST
+parameters :
+font_id,font_color
+response : {
+    "message": "Font updated successfully",
+    "data": null,
+    "status": true
+}
+
 
 
 ***// -> APIs was developed and tested ***
@@ -362,5 +445,5 @@ response : {
 //theme select,
 //background bg-type 1,2,3
 //button type,bordertyhpe,curvetype,fontcolor,btncolor
-get fonts
-set font font_id,font_color
+//get fonts
+//set font font_id,font_color
