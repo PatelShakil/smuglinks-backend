@@ -31,6 +31,7 @@ class UserController extends Controller
     {
         $user = UserMst::where("uid", $request->header("uid"))
             ->with('settings')
+            ->with('webConfig')
             ->first();
 
         if ($user != null) {
