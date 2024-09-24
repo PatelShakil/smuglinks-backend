@@ -15,15 +15,21 @@ return new class extends Migration
             $table->id();
             $table->string("uid");
             $table->foreign("uid")->references("uid")->on("users_mst")->cascadeOnDelete();
-            $table->unsignedBigInteger("font_id");
+            $table->unsignedBigInteger("font_id")->nullable();
             $table->foreign("font_id")->references("id")->on("web_fonts")->cascadeOnDelete();
-            $table->unsignedBigInteger("button_id");
-            $table->foreign("button_id")->references("id")->on("web_buttons")->cascadeOnDelete();
-            $table->unsignedBigInteger("theme_id");
+            $table->string("font_color")->nullable();
+            $table->unsignedBigInteger("theme_id")->nullable();
             $table->foreign("theme_id")->references("id")->on("web_themes")->cascadeOnDelete();
-            $table->boolean("is_gradient");
-            $table->string("start_color");
-            $table->string("end_color");
+            $table->string("btn_type")->nullable();
+            $table->string("btn_border_type")->nullable();
+            $table->string("btn_curve_type")->nullable();
+            $table->string("btn_font_color")->nullable();
+            $table->string("btn_color")->nullable();
+            $table->integer("bg_type")->nullable();//1->color, 2->gradient, 3-> image
+            $table->string("bg_color")->nullable();
+            $table->string("start_color")->nullable();
+            $table->string("end_color")->nullable();
+            $table->string("bg_img")->nullable();
             $table->timestamps();
         });
     }
