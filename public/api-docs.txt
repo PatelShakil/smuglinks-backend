@@ -278,6 +278,14 @@ response > {
 }
 
 15> /user/theme/select
+method: POST
+parameters :
+id
+response : {
+    "message": "Theme selected successfully",
+    "status": true,
+    "data": null
+}
 
 ***// -> APIs was developed and tested ***
 
@@ -286,7 +294,7 @@ response > {
 //remove profile image
 //add title,bio
 //theme get,
-theme select,
+//theme select,
 background bg-type 1,2,3
 button type,bordertyhpe,curvetype,fontcolor,btncolor
 get font
