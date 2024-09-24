@@ -321,6 +321,12 @@ response :{
     "status": true
 }
 
+17> /user/btn/set-btn
+method : POST
+parameters : 
+btn_type,btn_border_type,btn_curve_type,btn_font_color,btn_color
+response : 
+
 
 
 ***// -> APIs was developed and tested ***
@@ -333,6 +339,6 @@ response :{
 //theme get,
 //theme select,
 //background bg-type 1,2,3
-button type,bordertyhpe,curvetype,fontcolor,btncolor
-get font
+//button type,bordertyhpe,curvetype,fontcolor,btncolor
+get fonts
 set font font_id,font_color

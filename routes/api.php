@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\WebButtonController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/theme/get-all',[ThemeController::class,'getAllTheme']);
         Route::post('/theme/select-theme',[ThemeController::class,'selectTheme']);
         Route::post('/bg/set-bg',[ThemeController::class,'setBg']);
+        Route::post('/btn/set-btn',[WebButtonController::class,'setButton']);
     });
 
     Route::prefix('/admin')->group(function (){
