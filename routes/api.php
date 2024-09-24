@@ -28,6 +28,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/remove-profile-image',[UserController::class, 'deleteProfileImage']);
         Route::post('/add-title-bio',[UserController::class, 'addTitleBio']);
         Route::get('/theme/get-all',[ThemeController::class,'getAllTheme']);
+        Route::post('/theme/select-theme',[ThemeController::class,'selectTheme']);
     });
 
     Route::prefix('/admin')->group(function (){
