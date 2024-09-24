@@ -277,6 +277,8 @@ response > {
     ]
 }
 
+15> /user/theme/select
+
 ***// -> APIs was developed and tested ***
 
 //profile get

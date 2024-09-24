@@ -94,8 +94,9 @@ class AuthController extends Controller
             $setting = new UserSetting();
             $setting->uid = $user->uid;
             $setting->save();
-            // $webConfig =new WebConfig();
-            // $webConfig
+            $webConfig =new WebConfig();
+            $webConfig->uid = $user->uid;
+            $webConfig->save();
 
             // Commit the transaction
             DB::commit();
