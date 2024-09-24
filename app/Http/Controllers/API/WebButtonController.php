@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\WebConfig;
+use App\Models\WebFont;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -51,4 +52,42 @@ class WebButtonController extends Controller
             "status" => true
         ]);
     }
+
+    public function getFonts(Request $request){
+        $data = WebFont::where("enabled",true)->get();
+        return response()->json([
+            "message"=>"Font Loaded",
+            "status"=>true,
+            "data"=>$data
+        ]);
+    }
+
+    public function selectFont(Request $request){
+        $validator = Validator::make($request->all(),[
+            "font_id"=>"required",
+            "font_color"=>"required"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "message"=>$validator->errors()->first(),
+                "data"=>null,
+                "status",false
+            ]);
+        }
+
+
+        $webConfig = WebConfig::where("uid",$request->header("uid"))->first();
+        
+        $webConfig->font_id = $request->font_id;
+        $webConfig->font_color = $request->font_color;
+
+        $webConfig->save();
+        return response()->json([
+            "message"=>"Font updated successfully",
+            "data"=>null,
+            "status"=>true
+        ]);
+    }
+
 }
