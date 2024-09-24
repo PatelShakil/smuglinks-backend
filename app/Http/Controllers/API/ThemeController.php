@@ -134,7 +134,7 @@ class ThemeController extends Controller
                 $webConfig->end_color = $request->end_color;
                 break;
             }
-            case 2 : {
+            case 3 : {
                 $v = Validator::make($request->all(),[
                     'image'=>"required|image"
                 ]);
@@ -163,7 +163,7 @@ class ThemeController extends Controller
         $webConfig->save();
 
         return response()->json([
-            "message"=>"Background Image Updated Successfully",
+            "message"=>"Background Updated Successfully",
             "data"=>null,
             "status"=>true
         ]);
