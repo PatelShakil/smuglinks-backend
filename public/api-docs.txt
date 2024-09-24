@@ -325,7 +325,29 @@ response :{
 method : POST
 parameters : 
 btn_type,btn_border_type,btn_curve_type,btn_font_color,btn_color
-response : 
+response : {
+    "message": "Button updated",
+    "data": {
+        "id": 1,
+        "uid": "nRUJhUP2818wut7bMOaLnafpqCwxXq8wQ013N3WyPZoJgtDRdBlwP9iHzqawObZK",
+        "font_id": null,
+        "font_color": null,
+        "theme_id": 1,
+        "btn_type": "normal",
+        "btn_border_type": "rectangle",
+        "btn_curve_type": "small",
+        "btn_font_color": "#000000",
+        "btn_color": "#ffffff",
+        "bg_type": 3,
+        "bg_color": "#ffffff",
+        "start_color": "#ffffff",
+        "end_color": "#000000",
+        "bg_img": "public/storage/bg/1AVbmJHYnmf6n5NAp9eR5DOSpL9b7Bsrcf0NaFFe.jpg",
+        "created_at": "2024-09-24T03:55:48.000000Z",
+        "updated_at": "2024-09-24T06:05:36.000000Z"
+    },
+    "status": true
+}
 
 
 
