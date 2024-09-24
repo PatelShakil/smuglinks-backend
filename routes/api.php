@@ -29,6 +29,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add-title-bio',[UserController::class, 'addTitleBio']);
         Route::get('/theme/get-all',[ThemeController::class,'getAllTheme']);
         Route::post('/theme/select-theme',[ThemeController::class,'selectTheme']);
+        Route::post('/bg/set-bg',[ThemeController::class,'setBg']);
     });
 
     Route::prefix('/admin')->group(function (){
