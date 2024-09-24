@@ -140,27 +140,46 @@ method : GET
 (uid will be present in header)
 response >
 {
-  "status": true,
-  "data": {
-    "uid": "Mv8VU1ChWG2tS9Wj06YFgmWrrWAWgO6Dkt8SAi2PCd3MVmZgZkqk5qT0d4DSnwmr",
-    "username": "testuser",
-    "name": "Test User",
-    "email": "testuser@gmail.com",
-    "phone": null,
-    "profile": null,
-    "active": 1,
-    "created_at": "2024-09-21T17:05:26.000000Z",
-    "updated_at": "2024-09-21T18:08:15.000000Z",
-    "settings": {
-      "id": 1,
-      "uid": "Mv8VU1ChWG2tS9Wj06YFgmWrrWAWgO6Dkt8SAi2PCd3MVmZgZkqk5qT0d4DSnwmr",
-      "title": null,
-      "bio": null,
-      "category": "Engineer",
-      "created_at": "2024-09-21T17:05:26.000000Z",
-      "updated_at": "2024-09-21T18:08:15.000000Z"
+    "status": true,
+    "data": {
+        "uid": "nRUJhUP2818wut7bMOaLnafpqCwxXq8wQ013N3WyPZoJgtDRdBlwP9iHzqawObZK",
+        "username": "testuser",
+        "name": null,
+        "email": "testuser@gmail.com",
+        "phone": null,
+        "profile": null,
+        "active": 1,
+        "created_at": "2024-09-24T03:55:48.000000Z",
+        "updated_at": "2024-09-24T03:55:48.000000Z",
+        "settings": {
+            "id": 16,
+            "uid": "nRUJhUP2818wut7bMOaLnafpqCwxXq8wQ013N3WyPZoJgtDRdBlwP9iHzqawObZK",
+            "title": "this is title",
+            "bio": "this is bio sample",
+            "category": null,
+            "created_at": "2024-09-24T03:55:48.000000Z",
+            "updated_at": "2024-09-24T03:58:00.000000Z"
+        },
+        "web_config": {
+            "id": 1,
+            "uid": "nRUJhUP2818wut7bMOaLnafpqCwxXq8wQ013N3WyPZoJgtDRdBlwP9iHzqawObZK",
+            "font_id": null,
+            "font_color": null,
+            "theme_id": 1,
+            "btn_type": null,
+            "btn_border_type": null,
+            "btn_curve_type": null,
+            "btn_font_color": null,
+            "btn_color": null,
+            "bg_type": 3,
+            "bg_color": "#ffffff",
+            "start_color": "#ffffff",
+            "end_color": "#000000",
+            "bg_img": "public/storage/bg/1AVbmJHYnmf6n5NAp9eR5DOSpL9b7Bsrcf0NaFFe.jpg",
+            "created_at": "2024-09-24T03:55:48.000000Z",
+            "updated_at": "2024-09-24T05:45:38.000000Z"
+        }
     }
-  }
 }
 
 8> /user/reset-password
@@ -287,7 +306,25 @@ response : {
     "data": null
 }
 
+16> /user/bg/set-bg
+method : POST
+parameters :
+bg_type,
+when(bg_type){
+  1 -> bg_color,
+  2 -> start_color,end_color,
+  3 -> image
+}
+response :{
+    "message": "Background Updated Successfully",
+    "data": null,
+    "status": true
+}
+
+
+
 ***// -> APIs was developed and tested ***
+*** To Access any image you need to attach https://api.smuglinks.com/ + <image path> ***
 
 //profile get
 //add profile image
@@ -295,7 +332,7 @@ response : {
 //add title,bio
 //theme get,
 //theme select,
-background bg-type 1,2,3
+//background bg-type 1,2,3
 button type,bordertyhpe,curvetype,fontcolor,btncolor
 get font
 set font font_id,font_color
