@@ -43,4 +43,5 @@ Route::group(['middleware' => "api"], (function () {
     Route::prefix('subscription')->group(function (){
         Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
     });
+
 }));
