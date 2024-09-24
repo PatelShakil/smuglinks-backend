@@ -39,6 +39,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add', [LinkController::class, 'addLink']);
         Route::get('/get-all', [LinkController::class, 'getAllLinks']);
     });
+
     Route::prefix('subscription')->group(function (){
         Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
     });
