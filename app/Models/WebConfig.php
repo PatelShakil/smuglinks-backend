@@ -12,7 +12,19 @@ class WebConfig extends Model
     protected $table = 'web_config';
 
     protected $fillable = [
-        'uid', 'font_id', 'button_id', 'theme_id', 'is_gradient', 'start_color', 'end_color'
+        'uid',
+        'font_id',
+        'font_color',
+        'theme_id',
+        'btn_type',
+        'btn_border_type',
+        'btn_curve_type',
+        'btn_color',
+        'bg_type',
+        'bg_color',
+        'start_color',
+        'end_color',
+        'bg_img'
     ];
 
     public function user()
