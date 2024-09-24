@@ -46,6 +46,7 @@ class ThemeController extends Controller
 
         if ($webConfig != null) {
             $webConfig->theme_id = $request->id;
+            $webConfig->bg_type = 0;
             $webConfig->save();
             return response()->json([
                 'message' => "Theme selected successfully",
