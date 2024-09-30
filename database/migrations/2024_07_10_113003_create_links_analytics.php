@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('links_analytics', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger("link_id");
-            $table->foreign("link_id")->references("id")->on("links_mst")->cascadeOnDelete();
-            $table->integer("clicks");
-            $table->timestamps();
-        });
+        // Schema::create('links_analytics', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->unsignedBigInteger("link_id");
+        //     $table->foreign("link_id")->references("id")->on("links_mst")->cascadeOnDelete();
+        //     $table->timestamps();
+        // });
     }
 
     /**

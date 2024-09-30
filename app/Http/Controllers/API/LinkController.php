@@ -76,6 +76,12 @@ class LinkController extends Controller
 
     }
 
+    public function getAnalytics(Request $request){
+        
+    }
+
+
+
 
 
 }

@@ -20,9 +20,8 @@ class Link extends Model
         return $this->belongsTo(UserMst::class, 'uid', 'uid');
     }
 
-    public function analytics()
-    {
-        return $this->hasOne(LinkAnalytics::class, 'link_id', 'id');
+    public function views(){
+        return $this->hasMany(LinksView::class,'link_id','id');
     }
 
 

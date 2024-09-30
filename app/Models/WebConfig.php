@@ -46,4 +46,9 @@ class WebConfig extends Model
     {
         return $this->belongsTo(WebTheme::class, 'theme_id', 'id');
     }
+
+    public function views()
+    {
+        return $this->hasMany(WebView::class, 'config_id', 'id');
+    }
 }
