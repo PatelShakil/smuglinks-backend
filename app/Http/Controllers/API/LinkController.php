@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Link;
+use App\Models\LinksView;
+use App\Models\WebConfig;
+use App\Models\WebView;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -77,8 +80,54 @@ class LinkController extends Controller
     }
 
     public function getAnalytics(Request $request){
-        
+        $links = Link::where("uid",$request->header('uid'))
+        ->with("views")
+        ->first();
+
+        $web = WebConfig::where("uid",$request->header('uid'))
+        ->with("views")
+        ->first();
+
+        return response()->json([
+            "status"=>true,
+            "message"=>"Analytics Loaded",
+            "data"=>[
+                "links"=>$links,
+                "web"=>$web
+            ]
+            ]);
     }
+    public function registerLinkClick(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            "id" => 'required|exists:links_mst,id'
+        ]);
+
+        // Check for validation failure
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+        // Create a new LinksView record
+        $l = new LinksView();
+        $l->link_id = $request->id;
+        // Retrieve the client's IP address
+        $l->ip_address = $request->ip(); // Using Laravel helper to get client IP
+        $l->save(); // Save the new record
+
+        // Return a success response
+        return response()->json([
+            "status" => true,
+            "data" => $l,
+            "message" => "Link click registered successfully."
+        ]);
+    }
+
 
 
 
