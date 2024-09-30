@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WebView extends Model
 {
     use HasFactory;
-    protected $tableName = "web_view";
+    protected $table = "web_view";
     protected $fillable =[
         'config_id',
         'ip_address'

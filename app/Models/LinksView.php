@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LinksView extends Model
 {
     use HasFactory;
-    protected $tableName = "link_view";
+    protected $table = "link_view";
     protected $fillable =[
         'link_id',
         'ip_address'
