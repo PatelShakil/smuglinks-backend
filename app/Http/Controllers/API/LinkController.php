@@ -113,6 +113,8 @@ class LinkController extends Controller
             ]);
         }
 
+        $link = Link::find($request->id)->first();
+
         // Create a new LinksView record
         $l = new LinksView();
         $l->link_id = $request->id;
@@ -123,7 +125,7 @@ class LinkController extends Controller
         // Return a success response
         return response()->json([
             "status" => true,
-            "data" => $l,
+            "data" =>$link ,
             "message" => "Link click registered successfully."
         ]);
     }
