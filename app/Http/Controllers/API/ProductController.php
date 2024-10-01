@@ -35,8 +35,6 @@ class ProductController extends Controller
             ]);
         }
 
-        Log::info($request);
-
         // Create a new product record
         $p = new ProductMst();
         $p->uid = $request->header('uid');
@@ -56,36 +54,39 @@ class ProductController extends Controller
         $p->save(); // Save product
 
         // Handle image upload
-        $images = $request->file('images');
+        if ($request->hasFile('images')) {
+            // Retrieve the images from the request
+            $images = $request->file('images');
 
-        // If it's a single image, wrap it in an array to process it in the same loop
-        if (!is_array($images)) {
-            $images = [$images];
-        }
+            // Process each image
+            foreach ($images as $image) {
+                Log::info('Processing image: ' . $image->getClientOriginalName());
 
-        // Process each image
-        foreach ($images as $image) {
-            Log::info('Processing image: ' . $image->getClientOriginalName());
+                // Generate unique filename for each image
+                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            // Generate unique filename for each image
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                // Store the image in the public/uploads/products folder
+                try {
+                    $image->move(public_path('uploads/products'), $imageName);
 
-            // Store the image in the public/uploads/products folder
-            try {
-                $image->move(public_path('uploads/products'), $imageName);
-
-                // Save image details to the `products_images` table
-                ProductImage::create([
-                    'product_id' => $p->id, // Associate image with the product
-                    'img' => '/uploads/products/' . $imageName
-                ]);
-            } catch (\Exception $e) {
-                Log::error('Exception during image upload: ' . $e->getMessage());
-                return response()->json([
-                    "status" => false,
-                    "message" => "Error uploading image: " . $image->getClientOriginalName()
-                ]);
+                    // Save image details to the `products_images` table
+                    ProductImage::create([
+                        'product_id' => $p->id, // Associate image with the product
+                        'img' => '/uploads/products/' . $imageName
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Exception during image upload: ' . $e->getMessage());
+                    return response()->json([
+                        "status" => false,
+                        "message" => "Error uploading image: " . $image->getClientOriginalName()
+                    ]);
+                }
             }
+        } else {
+            return response()->json([
+                "status" => false,
+                "message" => "No images found."
+            ]);
         }
 
         return response()->json([
@@ -94,6 +95,7 @@ class ProductController extends Controller
             "message" => "Product and images uploaded successfully."
         ]);
     }
+
 
     public function getProducts(Request $request)
     {
@@ -255,7 +257,6 @@ class ProductController extends Controller
 
 
     public function editProduct(Request $request)
-
     {
         // Validate the input fields
         $validator = Validator::make($request->all(), [
