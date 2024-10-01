@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('action')->nullable();
             $table->string('link')->nullable();
             $table->string('btn_name')->nullable();
-            $table->boolean("enabled");
+            $table->boolean("enabled")->default(true);
             $table->timestamps();
         });
     }

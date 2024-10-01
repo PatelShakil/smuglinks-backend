@@ -74,4 +74,24 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getProducts(Request $request){
+        $products = ProductMst::where("uid",$request->header('uid'))
+        ->with('images')
+        ->first();
+
+        if(count($products) > 0){
+            return response()->json([
+                'message'=>"Products Loaded Successfully",
+                'status'=>true,
+                "data"=>$products
+            ]);
+        }else{
+            return response()->json([
+                'message'=>"Products not available",
+                'status'=>false,
+                "data"=>$products
+            ]);
+        }
+    }
+
 }
