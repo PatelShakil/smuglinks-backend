@@ -51,6 +51,7 @@ Route::group(['middleware' => "api"], (function () {
     Route::prefix('product') ->group(function(){
         Route::post('/add',[ProductController::class,'addProduct']);
         Route::get('/get-all',[ProductController::class,'getProducts']);
+        Route::post('/delete',[ProductController::class,'deleteProduct']);
     });
 
     Route::prefix('subscription')->group(function (){

@@ -114,4 +114,185 @@ class ProductController extends Controller
         }
     }
 
+    public function deleteProduct(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'id'=>'required|exists:products_mst,id'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=>$validator->errors()->first(),
+                'status'=>false
+            ]);
+        }
+        // Find the product
+        $product = ProductMst::find($request->id);
+
+        // Check if product exists
+        if (!$product) {
+            return response()->json([
+                "status" => false,
+                "message" => "Product not found."
+            ]);
+        }
+
+        // Retrieve all associated images
+        $images = $product->images;
+
+        // Delete each image file from the server
+        foreach ($images as $image) {
+            $imagePath = public_path($image->img); // Get the file path
+
+            if (file_exists($imagePath)) {
+                @unlink($imagePath); // Delete the image file
+            }
+
+            // Delete the image record from the database
+            $image->delete();
+        }
+
+        // Delete the product itself
+        $product->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Product and associated images deleted successfully."
+        ]);
+    }
+
+    public function deleteProductImage($imageId)
+    {
+        // Find the image by ID
+        $image = ProductImage::find($imageId);
+
+        // Check if the image exists
+        if (!$image) {
+            return response()->json([
+                "status" => false,
+                "message" => "Image not found."
+            ]);
+        }
+
+        // Get the image path
+        $imagePath = public_path($image->img);
+
+        // Delete the image file from the server
+        if (file_exists($imagePath)) {
+            @unlink($imagePath); // Delete the image file
+        }
+
+        // Delete the image record from the database
+        $image->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Image deleted successfully."
+        ]);
+    }
+
+    public function addProductImage(Request $request, $productId)
+    {
+        // Validate the image input
+        $validator = Validator::make($request->all(), [
+            'images' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+        // Find the product
+        $product = ProductMst::find($productId);
+
+        if (!$product) {
+            return response()->json([
+                "status" => false,
+                "message" => "Product not found."
+            ]);
+        }
+
+        // Handle image upload
+        $images = $request->file('images');
+        if (!is_array($images)) {
+            $images = [$images]; // Wrap single image as an array
+        }
+
+        // Process each image
+        foreach ($images as $image) {
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Store the image
+            $image->move(public_path('uploads/products'), $imageName);
+
+            // Save image details to `products_images`
+            ProductImage::create([
+                'product_id' => $product->id,
+                'img' => '/uploads/products/' . $imageName
+            ]);
+        }
+
+        return response()->json([
+            "status" => true,
+            "message" => "Images added successfully."
+        ]);
+    }
+
+
+    public function editProduct(Request $request, $id)
+    {
+        // Validate the input fields
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+            'action' => 'required',
+            'link' => 'required',
+            'btn_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+        // Find the product
+        $product = ProductMst::find($id);
+
+        // Check if product exists
+        if (!$product) {
+            return response()->json([
+                "status" => false,
+                "message" => "Product not found."
+            ]);
+        }
+
+        // Update the product fields
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->category = $request->category;
+        $product->action = $request->action;
+
+        if ($request->action == "whatsapp") {
+            $product->link = "https://wa.me/" . $request->link;
+        } else {
+            $product->link = $request->link;
+        }
+
+        $product->btn_name = $request->btn_name;
+        $product->save(); // Save the product
+
+        return response()->json([
+            "status" => true,
+            "message" => "Product updated successfully.",
+            "data" => $product
+        ]);
+    }
+
+
 }
