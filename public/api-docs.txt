@@ -512,6 +512,9 @@ response : {
     }
 }
 
+22> /product/get-all
+method : GET
+response : 
 
 ***// -> APIs was developed and tested ***
 *** To Access any image you need to attach https://api.smuglinks.com/ + <image path> ***

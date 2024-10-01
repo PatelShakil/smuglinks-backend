@@ -100,8 +100,7 @@ class ProductController extends Controller
 
     public function getProducts(Request $request){
         $products = ProductMst::where("uid",$request->header('uid'))
-        ->with('images')
-        ->first();
+        ->with('images')->get();
 
         if($products != null){
             return response()->json([
