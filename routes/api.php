@@ -55,6 +55,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/delete-image',[ProductController::class, 'deleteProductImage']);
         Route::post('/add-image',[ProductController::class, 'addProductImage']);
         Route::post('/edit',[ProductController::class, 'editProduct']);
+        Route::get('/find/{id}',[ProductController::class, 'getProduct']);
     });
 
     Route::prefix('subscription')->group(function (){

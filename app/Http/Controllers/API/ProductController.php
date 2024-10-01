@@ -316,4 +316,23 @@ class ProductController extends Controller
             "data" => $product
         ]);
     }
+
+    public function getProduct($id){
+        $product = ProductMst::find($id)->with('images');
+
+        if($product != null){
+            return response()->json([
+                'message'=>"Product Loaded",
+                "status"=>true,
+                "data"=>$product
+            ]);
+        }else{
+            return response()->json([
+                'message' => "Product not found",
+                "status" => false,
+                "data" => null
+            ]);
+
+        }
+    }
 }
