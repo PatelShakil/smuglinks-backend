@@ -95,34 +95,35 @@ class ProductController extends Controller
         ]);
     }
 
-    public function getProducts(Request $request){
-        $products = ProductMst::where("uid",$request->header('uid'))
-        ->with('images')->get();
+    public function getProducts(Request $request)
+    {
+        $products = ProductMst::where("uid", $request->header('uid'))
+            ->with('images')->get();
 
-        if($products != null){
+        if ($products != null) {
             return response()->json([
-                'message'=>"Products Loaded Successfully",
-                'status'=>true,
-                "data"=>$products
+                'message' => "Products Loaded Successfully",
+                'status' => true,
+                "data" => $products
             ]);
-        }else{
+        } else {
             return response()->json([
-                'message'=>"Products not available",
-                'status'=>false,
-                "data"=>$products
+                'message' => "Products not available",
+                'status' => false,
+                "data" => $products
             ]);
         }
     }
 
     public function deleteProduct(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'id'=>'required|exists:products_mst,id'
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:products_mst,id'
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'message'=>$validator->errors()->first(),
-                'status'=>false
+                'message' => $validator->errors()->first(),
+                'status' => false
             ]);
         }
         // Find the product
@@ -160,10 +161,19 @@ class ProductController extends Controller
         ]);
     }
 
-    public function deleteProductImage($imageId)
+    public function deleteProductImage(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:products_images,id'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors()->first(),
+                'status' => false
+            ]);
+        }
         // Find the image by ID
-        $image = ProductImage::find($imageId);
+        $image = ProductImage::find($request->id);
 
         // Check if the image exists
         if (!$image) {
@@ -190,10 +200,11 @@ class ProductController extends Controller
         ]);
     }
 
-    public function addProductImage(Request $request, $productId)
+    public function addProductImage(Request $request)
     {
         // Validate the image input
         $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:products_mst,id',
             'images' => 'required',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image
         ]);
@@ -206,7 +217,7 @@ class ProductController extends Controller
         }
 
         // Find the product
-        $product = ProductMst::find($productId);
+        $product = ProductMst::find($request->id);
 
         if (!$product) {
             return response()->json([
@@ -242,10 +253,12 @@ class ProductController extends Controller
     }
 
 
-    public function editProduct(Request $request, $id)
+    public function editProduct(Request $request)
+
     {
         // Validate the input fields
         $validator = Validator::make($request->all(), [
+            'id'=>'required|exists:products_mst,id',
             'name' => 'required',
             'description' => 'required',
             'category' => 'required',
@@ -262,7 +275,7 @@ class ProductController extends Controller
         }
 
         // Find the product
-        $product = ProductMst::find($id);
+        $product = ProductMst::find($request->id);
 
         // Check if product exists
         if (!$product) {
@@ -293,6 +306,4 @@ class ProductController extends Controller
             "data" => $product
         ]);
     }
-
-
 }
