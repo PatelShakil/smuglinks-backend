@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
 use App\Models\ProductMst;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -52,28 +53,47 @@ class ProductController extends Controller
         $p->btn_name = $request->btn_name;
         $p->save();
 
-        // Check if the request contains files for upload
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                // Generate unique filename
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        // Log to check if files exist in request
+        if (!$request->hasFile('images')) {
+            return response()->json([
+                "status" => false,
+                "message" => "No images found in the request."
+            ]);
+        }
 
-                // Store the image in the public folder
+        // Process and save each image
+        foreach ($request->file('images') as $image) {
+            // Debugging: Log the file details
+            Log::info('Processing image: ' . $image->getClientOriginalName());
+
+            // Generate unique filename
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Store the image in the public folder
+            try {
                 $imagePath = $image->move(public_path('products'), $imageName);
 
-                // Check if the image is successfully saved
-                if ($imagePath) {
-                    // Store the image URL in the `products_images` table
-                    ProductImage::create([
-                        'product_id' => $p->id, // Associate with the product
-                        'img' => 'public/storage/products/' . $imageName
-                    ]);
-                } else {
+                // Debugging: Check if image was saved successfully
+                if (!$imagePath) {
+                    Log::error('Image upload failed: ' . $image->getClientOriginalName());
                     return response()->json([
                         "status" => false,
-                        "message" => "Failed to save image to server",
+                        "message" => "Failed to upload image: " . $image->getClientOriginalName()
                     ]);
                 }
+
+                // Save image details to the database
+                ProductImage::create([
+                    'product_id' => $p->id, // Associate with the product
+                    'img' => '/public/storage/products/' . $imageName
+                ]);
+            } catch (\Exception $e) {
+                // Debugging: Log any exceptions
+            Log::error('Exception during image upload: ' . $e->getMessage());
+                return response()->json([
+                    "status" => false,
+                    "message" => "An error occurred while uploading images."
+                ]);
             }
         }
 
@@ -83,6 +103,7 @@ class ProductController extends Controller
             "message" => "Product created successfully with images."
         ]);
     }
+
 
 
     public function getProducts(Request $request){
