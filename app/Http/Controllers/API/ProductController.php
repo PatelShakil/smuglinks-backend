@@ -79,7 +79,7 @@ class ProductController extends Controller
         ->with('images')
         ->first();
 
-        if(count($products) > 0){
+        if($products != null){
             return response()->json([
                 'message'=>"Products Loaded Successfully",
                 'status'=>true,
