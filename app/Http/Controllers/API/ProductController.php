@@ -95,9 +95,6 @@ class ProductController extends Controller
         ]);
     }
 
-
-
-
     public function getProducts(Request $request){
         $products = ProductMst::where("uid",$request->header('uid'))
         ->with('images')->get();
