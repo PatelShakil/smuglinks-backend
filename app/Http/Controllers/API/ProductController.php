@@ -145,7 +145,7 @@ class ProductController extends Controller
             $imagePath = public_path($image->img); // Get the file path
 
             if (file_exists($imagePath)) {
-                @unlink($imagePath); // Delete the image file
+                unlink($imagePath); // Delete the image file
             }
 
             // Delete the image record from the database
@@ -188,11 +188,12 @@ class ProductController extends Controller
 
         // Delete the image file from the server
         if (file_exists($imagePath)) {
-            @unlink($imagePath); // Delete the image file
+            Log::info($imagePath);
+            unlink($imagePath); // Delete the image file
+            $image->delete();
         }
 
         // Delete the image record from the database
-        $image->delete();
 
         return response()->json([
             "status" => true,
