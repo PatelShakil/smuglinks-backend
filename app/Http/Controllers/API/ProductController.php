@@ -54,14 +54,14 @@ class ProductController extends Controller
         }
 
         $p->btn_name = $request->btn_name;
-        $p->save(); // Save product
+        // $p->save(); // Save product
 
         // Handle image upload
         if ($request->hasFile('images')) {
             $images = $request->file('images');
 
             // Log the number of images found
-            Log::info('Number of images: ' . count($images));
+            Log::info($request->file);
 
             // Process each image
             foreach ($images as $image) {
@@ -76,10 +76,10 @@ class ProductController extends Controller
                     $image->move(public_path('uploads/products'), $imageName);
 
                     // Save image details to the `products_images` table
-                    ProductImage::create([
-                        'product_id' => $p->id, // Associate image with the product
-                        'img' => '/uploads/products/' . $imageName
-                    ]);
+                    // ProductImage::create([
+                    //     'product_id' => $p->id, // Associate image with the product
+                    //     'img' => '/uploads/products/' . $imageName
+                    // ]);
 
                     // Log successful image upload
                     Log::info('Image uploaded successfully: ' . $imageName);
