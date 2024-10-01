@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function addProduct(Request $request)
     {
-        // Validate the input fields
+        // Validate input fields, including images
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
@@ -22,8 +22,8 @@ class ProductController extends Controller
             'action' => 'required',
             'link' => 'required',
             'btn_name' => 'required',
-            'images' => 'required', // Ensure that images are provided
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image
+            'images' => 'required', // Required at least one image
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validate each image (if multiple)
         ]);
 
         // Handle validation failure
@@ -37,7 +37,7 @@ class ProductController extends Controller
 
         Log::info($request);
 
-        // Create a new product
+        // Create a new product record
         $p = new ProductMst();
         $p->uid = $request->header('uid');
         $p->name = $request->name;
@@ -53,48 +53,37 @@ class ProductController extends Controller
         }
 
         $p->btn_name = $request->btn_name;
-        $p->save();
+        $p->save(); // Save product
 
-        // Log to check if files exist in request
-        if (!$request->hasFile('images')) {
-            return response()->json([
-                "status" => false,
-                "message" => "No images found in the request."
-            ]);
+        // Handle image upload
+        $images = $request->file('images');
+
+        // If it's a single image, wrap it in an array to process it in the same loop
+        if (!is_array($images)) {
+            $images = [$images];
         }
 
-        // Process and save each image
-        foreach ($request->file('images') as $image) {
-            // Debugging: Log the file details
+        // Process each image
+        foreach ($images as $image) {
             Log::info('Processing image: ' . $image->getClientOriginalName());
 
-            // Generate unique filename
+            // Generate unique filename for each image
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            // Store the image in the public folder
+            // Store the image in the public/uploads/products folder
             try {
-                $imagePath = $image->move(public_path('products'), $imageName);
+                $image->move(public_path('uploads/products'), $imageName);
 
-                // Debugging: Check if image was saved successfully
-                if (!$imagePath) {
-                    Log::error('Image upload failed: ' . $image->getClientOriginalName());
-                    return response()->json([
-                        "status" => false,
-                        "message" => "Failed to upload image: " . $image->getClientOriginalName()
-                    ]);
-                }
-
-                // Save image details to the database
+                // Save image details to the `products_images` table
                 ProductImage::create([
-                    'product_id' => $p->id, // Associate with the product
-                    'img' => '/public/storage/products/' . $imageName
+                    'product_id' => $p->id, // Associate image with the product
+                    'img' => '/uploads/products/' . $imageName
                 ]);
             } catch (\Exception $e) {
-                // Debugging: Log any exceptions
-            Log::error('Exception during image upload: ' . $e->getMessage());
+                Log::error('Exception during image upload: ' . $e->getMessage());
                 return response()->json([
                     "status" => false,
-                    "message" => "An error occurred while uploading images."
+                    "message" => "Error uploading image: " . $image->getClientOriginalName()
                 ]);
             }
         }
@@ -102,9 +91,10 @@ class ProductController extends Controller
         return response()->json([
             "status" => true,
             "data" => $p,
-            "message" => "Product created successfully with images."
+            "message" => "Product and images uploaded successfully."
         ]);
     }
+
 
 
 
