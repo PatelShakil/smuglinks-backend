@@ -35,6 +35,9 @@ class ProductController extends Controller
             ]);
         }
 
+        // Log request to help with debugging
+        Log::info('Received product request: ', $request->all());
+
         // Create a new product record
         $p = new ProductMst();
         $p->uid = $request->header('uid');
@@ -55,11 +58,14 @@ class ProductController extends Controller
 
         // Handle image upload
         if ($request->hasFile('images')) {
-            // Retrieve the images from the request
             $images = $request->file('images');
+
+            // Log the number of images found
+            Log::info('Number of images: ' . count($images));
 
             // Process each image
             foreach ($images as $image) {
+                // Log each image processing
                 Log::info('Processing image: ' . $image->getClientOriginalName());
 
                 // Generate unique filename for each image
@@ -74,6 +80,9 @@ class ProductController extends Controller
                         'product_id' => $p->id, // Associate image with the product
                         'img' => '/uploads/products/' . $imageName
                     ]);
+
+                    // Log successful image upload
+                    Log::info('Image uploaded successfully: ' . $imageName);
                 } catch (\Exception $e) {
                     Log::error('Exception during image upload: ' . $e->getMessage());
                     return response()->json([
@@ -83,6 +92,7 @@ class ProductController extends Controller
                 }
             }
         } else {
+            Log::warning('No images were found in the request.');
             return response()->json([
                 "status" => false,
                 "message" => "No images found."
@@ -95,6 +105,7 @@ class ProductController extends Controller
             "message" => "Product and images uploaded successfully."
         ]);
     }
+
 
 
     public function getProducts(Request $request)
