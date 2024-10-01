@@ -61,7 +61,7 @@ class ProductController extends Controller
             $images = $request->file('images');
 
             // Log the number of images found
-            Log::info($request->file);
+            Log::info($request);
 
             // Process each image
             foreach ($images as $image) {
