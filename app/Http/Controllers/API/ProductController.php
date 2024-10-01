@@ -54,49 +54,46 @@ class ProductController extends Controller
         }
 
         $p->btn_name = $request->btn_name;
-        // $p->save(); // Save product
+        $p->save(); // Save product
 
         // Handle image upload
-        if ($request->hasFile('images')) {
-            $images = $request->file('images');
+        $images = $request->file('images');
 
-            // Log the number of images found
-            Log::info($request->file('images'));
+        // Ensure that $images is always treated as an array, even if a single image is uploaded
+        if (!is_array($images)) {
+            $images = [$images];
+        }
 
-            // Process each image
-            foreach ($images as $image) {
-                // Log each image processing
-                Log::info('Processing image: ' . $image->getClientOriginalName());
+        // Log the number of images found
+        Log::info('Number of images: ' . count($images));
 
-                // Generate unique filename for each image
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+        // Process each image
+        foreach ($images as $image) {
+            // Log each image processing
+            Log::info('Processing image: ' . $image->getClientOriginalName());
 
-                // Store the image in the public/uploads/products folder
-                try {
-                    $image->move(public_path('uploads/products'), $imageName);
+            // Generate unique filename for each image
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-                    // Save image details to the `products_images` table
-                    // ProductImage::create([
-                    //     'product_id' => $p->id, // Associate image with the product
-                    //     'img' => '/uploads/products/' . $imageName
-                    // ]);
+            // Store the image in the public/uploads/products folder
+            try {
+                $image->move(public_path('uploads/products'), $imageName);
 
-                    // Log successful image upload
-                    Log::info('Image uploaded successfully: ' . $imageName);
-                } catch (\Exception $e) {
-                    Log::error('Exception during image upload: ' . $e->getMessage());
-                    return response()->json([
-                        "status" => false,
-                        "message" => "Error uploading image: " . $image->getClientOriginalName()
-                    ]);
-                }
+                // Save image details to the `products_images` table
+                ProductImage::create([
+                    'product_id' => $p->id, // Associate image with the product
+                    'img' => '/uploads/products/' . $imageName
+                ]);
+
+                // Log successful image upload
+                Log::info('Image uploaded successfully: ' . $imageName);
+            } catch (\Exception $e) {
+                Log::error('Exception during image upload: ' . $e->getMessage());
+                return response()->json([
+                    "status" => false,
+                    "message" => "Error uploading image: " . $image->getClientOriginalName()
+                ]);
             }
-        } else {
-            Log::warning('No images were found in the request.');
-            return response()->json([
-                "status" => false,
-                "message" => "No images found."
-            ]);
         }
 
         return response()->json([
