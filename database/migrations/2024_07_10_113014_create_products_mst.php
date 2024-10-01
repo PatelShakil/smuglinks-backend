@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreign("uid")->references("uid")->on("users_mst")->cascadeOnDelete();
             $table->string("name");
             $table->string("description")->nullable();
+            $table->string('category');
+            $table->string('action')->nullable();
+            $table->string('link')->nullable();
+            $table->string('btn_name')->nullable();
             $table->boolean("enabled");
             $table->timestamps();
         });

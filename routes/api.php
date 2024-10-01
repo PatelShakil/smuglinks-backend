@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LinkController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\WebButtonController;
@@ -45,6 +46,10 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/get-all', [LinkController::class, 'getAllLinks']);
         Route::get('/analytics',[LinkController::class, 'getAnalytics']);
         Route::post('/link-click',[LinkController::class, 'registerLinkClick']);
+    });
+
+    Route::prefix('product') ->group(function(){
+        Route::post('/add',[ProductController::class,'addProduct']);
     });
 
     Route::prefix('subscription')->group(function (){
