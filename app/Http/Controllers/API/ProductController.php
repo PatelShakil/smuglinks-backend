@@ -35,6 +35,8 @@ class ProductController extends Controller
             ]);
         }
 
+        Log::info($request);
+
         // Create a new product
         $p = new ProductMst();
         $p->uid = $request->header('uid');
