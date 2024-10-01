@@ -52,18 +52,28 @@ class ProductController extends Controller
         $p->btn_name = $request->btn_name;
         $p->save();
 
-        // Process and store multiple images
+        // Check if the request contains files for upload
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                // Generate unique filename and store the image in the public folder
+                // Generate unique filename
                 $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/products'), $imageName);
 
-                // Store the image URL in the `products_images` table
-                ProductImage::create([
-                    'product_id' => $p->id, // Associate with the product
-                    'img' => '/uploads/products/' . $imageName
-                ]);
+                // Store the image in the public folder
+                $imagePath = $image->move(public_path('products'), $imageName);
+
+                // Check if the image is successfully saved
+                if ($imagePath) {
+                    // Store the image URL in the `products_images` table
+                    ProductImage::create([
+                        'product_id' => $p->id, // Associate with the product
+                        'img' => 'public/storage/products/' . $imageName
+                    ]);
+                } else {
+                    return response()->json([
+                        "status" => false,
+                        "message" => "Failed to save image to server",
+                    ]);
+                }
             }
         }
 
@@ -73,6 +83,7 @@ class ProductController extends Controller
             "message" => "Product created successfully with images."
         ]);
     }
+
 
     public function getProducts(Request $request){
         $products = ProductMst::where("uid",$request->header('uid'))
