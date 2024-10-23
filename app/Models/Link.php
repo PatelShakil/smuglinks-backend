@@ -23,7 +23,5 @@ class Link extends Model
     public function views(){
         return $this->hasMany(LinksView::class,'link_id','id');
     }
-
-
     
 }

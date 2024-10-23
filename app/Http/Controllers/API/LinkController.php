@@ -61,7 +61,7 @@ class LinkController extends Controller
     public function getAllLinks(Request $request){
         $uid = $request->header('uid');
 
-        $links = Link::where('uid', $uid)->with("analytics")->get();
+        $links = Link::where('uid', $uid)->with("views")->get();
 
         if($links != null){
             return response()->json([

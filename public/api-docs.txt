@@ -554,6 +554,16 @@ else link = <link> example -> https://abc.com
 response : {
 
 }
+curl --location 'https://api.smuglinks.com/api/product/add' \
+--header 'uid: OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx' \
+--form 'name="Sample Product"' \
+--form 'description="This is a sample product description."' \
+--form 'category="Sample Category"' \
+--form 'btn_name="Buy Now"' \
+--form 'action="link"' \
+--form 'link="https://abc.com"' \
+--form 'images=@"D:\My_Projects\Teach-Savvy-BIMS\bims-backend\storage\app\public\category-images\LgyG3NkA9GhcE7gpTbUqbaMdmmfRkB0yuDrk7qdG.jpg"' \
+--form 'images=@"D:\My_Projects\Teach-Savvy-BIMS\bims-backend\storage\app\public\category-images\5FjHSc9qEvSCdmeNA5UP4rq9mQHLQ8Hwp3VgbRzr.webp"'
 
 24> /product/delete-image
 Method: POST

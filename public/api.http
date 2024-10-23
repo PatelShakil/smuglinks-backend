@@ -1,0 +1,3 @@
+GET https://api.smuglinks.com/api/link/get-all
+uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
+Content-Type: application/json
