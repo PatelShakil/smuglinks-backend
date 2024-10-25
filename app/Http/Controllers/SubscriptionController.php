@@ -58,7 +58,8 @@ class SubscriptionController extends Controller
         $prices = array(json_decode($request->prices));
         $sp->duration = $request->duration;
         $sp->save();
-        print_r(json_decode($request->prices) );
+        print_r(json_decode($request->prices));
+        print($prices);
         foreach ($prices as $p) {
             $ab = new PlanPricing();
             $ab->plan_id = $sp->id;
