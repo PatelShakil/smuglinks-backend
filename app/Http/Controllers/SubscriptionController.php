@@ -54,6 +54,7 @@ class SubscriptionController extends Controller
         $sp->description = $request->description;
         $sp->price= $request->price;
         $sp->duration= $request->duration;
+        $sp->razorpay_payment_id = $request->razorpay_payment_id;
 
         $sp->save();
 

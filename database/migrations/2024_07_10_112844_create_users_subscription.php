@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean("enabled");
             $table->unsignedBigInteger("plan_id");
             $table->foreign("plan_id")->references("id")->on("subscription_plans")->cascadeOnDelete();
+            $table->string("razorpay_payment_id")->nullable();
             $table->timestamps();
         });
     }

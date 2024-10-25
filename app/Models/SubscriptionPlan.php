@@ -12,7 +12,7 @@ class SubscriptionPlan extends Model
     protected $table = 'subscription_plans';
 
     protected $fillable = [
-        'type', 'name', 'description', 'price', 'duration'
+        'type', 'name', 'description', 'price', 'duration','razorpay_payment_id'
     ];
 
     public function userSubscriptions()
