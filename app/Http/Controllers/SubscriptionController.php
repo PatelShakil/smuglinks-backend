@@ -14,7 +14,7 @@ class SubscriptionController extends Controller
 
     public function getAllSubscriptions(Request $request){
 
-        $plans = SubscriptionPlan::get();
+        $plans = SubscriptionPlan::with('prices')->get();
 
         if(count($plans) == 0){
             return response()->json([
