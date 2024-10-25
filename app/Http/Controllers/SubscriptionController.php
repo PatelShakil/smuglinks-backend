@@ -37,11 +37,11 @@ class SubscriptionController extends Controller
     {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
-            "type" => "required",
-            "name" => "required",
-            "description" => "required",
-            "prices" => "required",
-            "duration" => "required"
+            "type" => "required|string",
+            "name" => "required|string",
+            "description" => "required|string",
+            "prices" => "required|array",
+            "duration" => "required|integer"
         ]);
 
         if ($validator->fails()) {
@@ -52,30 +52,34 @@ class SubscriptionController extends Controller
             ]);
         }
 
+        // Create a new Subscription Plan
         $sp = new SubscriptionPlan();
         $sp->type = $request->type;
         $sp->name = $request->name;
         $sp->description = $request->description;
-        $prices = json_decode($request->prices);
         $sp->duration = $request->duration;
         $sp->save();
-        print_r(json_decode($request->prices));
-        // foreach ($prices as $p) {
-        //     print_r($p);
-        //     $ab = new PlanPricing();
-        //     $ab->plan_id = $sp->id;
-        //     $ab->country_code = $p->country_code;
-        //     $ab->amount = $p->amount;
-        //     $ab->save();
-        // }
+
+        // Decode and iterate through prices
+        $prices = $request->prices;  // Laravel automatically decodes JSON in array format
+        foreach ($prices as $p) {
+            if (isset($p['country_code']) && isset($p['amount'])) {
+                $ab = new PlanPricing();
+                $ab->plan_id = $sp->id;
+                $ab->country_code = $p['country_code'];
+                $ab->amount = $p['amount'];
+                $ab->save();
+            }
+        }
 
         return response()->json([
             "status" => true,
             "message" => "Plan Created Successfully",
             "data" => $sp,
-            "d"=>$prices
+            "prices" => $prices
         ]);
     }
+
 
     public function subscribePlan(Request $request)
     {
