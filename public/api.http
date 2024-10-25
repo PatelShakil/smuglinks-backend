@@ -31,3 +31,13 @@ uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
         }
     ]
 }
+
+###
+POST https://api.smuglinks.com/api/user/subscribe-to-plan
+uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
+Content-Type: application/json
+
+{
+    "plan_id":17,
+    "razorpay_payment_id":"absdkfasfdajdsfljasdf"
+}
