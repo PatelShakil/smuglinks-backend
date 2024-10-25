@@ -12,11 +12,17 @@ class SubscriptionPlan extends Model
     protected $table = 'subscription_plans';
 
     protected $fillable = [
-        'type', 'name', 'description', 'price', 'duration','razorpay_payment_id'
+        'type', 'name', 'description','duration'
     ];
 
     public function userSubscriptions()
     {
-        return $this->hasMany(UserSubscription::class, 'plan_id', 'id');
+        return $this->hasMany(UserSubscription::class, 'plan_id','id');
     }
+
+    public function prices(){
+        return $this->hasMany(PlanPricing::class,'plan_id','id');
+    }
+
+
 }

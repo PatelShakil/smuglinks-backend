@@ -12,7 +12,7 @@ class UserSubscription extends Model
     protected $table = 'users_subscription';
 
     protected $fillable = [
-        'uid', 'order_id', 'start_timestamp', 'enabled', 'plan_id'
+        'uid', 'order_id', 'start_timestamp', 'enabled', 'plan_id','razorpay_payment_id'
     ];
 
     public function user()

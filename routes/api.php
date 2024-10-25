@@ -25,41 +25,42 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/update-yourself', [UserController::class, 'update']);
         Route::get('/details', [UserController::class, 'getUserDetails']);
         Route::post('/reset-password', [AuthController::class, 'resetPassword']);
-        Route::post('/subscribe-to-plan',[SubscriptionController::class,'subscribePlan']);
-        Route::post('/add-profile-image',[UserController::class, 'addProfileImage']);
-        Route::get('/remove-profile-image',[UserController::class, 'deleteProfileImage']);
-        Route::post('/add-title-bio',[UserController::class, 'addTitleBio']);
-        Route::get('/theme/get-all',[ThemeController::class,'getAllTheme']);
-        Route::post('/theme/select-theme',[ThemeController::class,'selectTheme']);
-        Route::post('/bg/set-bg',[ThemeController::class,'setBg']);
-        Route::post('/btn/set-btn',[WebButtonController::class,'setButton']);
-        Route::get('/fonts/get-all',[WebButtonController::class,'getFonts']);
-        Route::post('/fonts/set-font',[WebButtonController::class,'selectFont']);
+        Route::post('/subscribe-to-plan', [SubscriptionController::class, 'subscribePlan']);
+        Route::post('/add-profile-image', [UserController::class, 'addProfileImage']);
+        Route::get('/remove-profile-image', [UserController::class, 'deleteProfileImage']);
+        Route::post('/add-title-bio', [UserController::class, 'addTitleBio']);
+        Route::get('/theme/get-all', [ThemeController::class, 'getAllTheme']);
+        Route::post('/theme/select-theme', [ThemeController::class, 'selectTheme']);
+        Route::post('/bg/set-bg', [ThemeController::class, 'setBg']);
+        Route::post('/btn/set-btn', [WebButtonController::class, 'setButton']);
+        Route::get('/fonts/get-all', [WebButtonController::class, 'getFonts']);
+        Route::post('/fonts/set-font', [WebButtonController::class, 'selectFont']);
     });
 
-    Route::prefix('/admin')->group(function (){
-        Route::post('/create-subscription-plan',[SubscriptionController::class,'addPlan']);
+    Route::prefix('/admin')->group(function () {
+        Route::prefix('/subscriptions')->group(function () {
+            Route::post('/create-plan', [SubscriptionController::class, 'addPlan']);
+        });
     });
 
     Route::prefix('link')->group(function () {
         Route::post('/add', [LinkController::class, 'addLink']);
         Route::get('/get-all', [LinkController::class, 'getAllLinks']);
-        Route::get('/analytics',[LinkController::class, 'getAnalytics']);
-        Route::post('/link-click',[LinkController::class, 'registerLinkClick']);
+        Route::get('/analytics', [LinkController::class, 'getAnalytics']);
+        Route::post('/link-click', [LinkController::class, 'registerLinkClick']);
     });
 
-    Route::prefix('product') ->group(function(){
-        Route::post('/add',[ProductController::class,'addProduct']);
-        Route::get('/get-all',[ProductController::class,'getProducts']);
-        Route::post('/delete',[ProductController::class,'deleteProduct']);
-        Route::post('/delete-image',[ProductController::class, 'deleteProductImage']);
-        Route::post('/add-image',[ProductController::class, 'addProductImage']);
-        Route::post('/edit',[ProductController::class, 'editProduct']);
-        Route::get('/find/{id}',[ProductController::class, 'getProduct']);
+    Route::prefix('product')->group(function () {
+        Route::post('/add', [ProductController::class, 'addProduct']);
+        Route::get('/get-all', [ProductController::class, 'getProducts']);
+        Route::post('/delete', [ProductController::class, 'deleteProduct']);
+        Route::post('/delete-image', [ProductController::class, 'deleteProductImage']);
+        Route::post('/add-image', [ProductController::class, 'addProductImage']);
+        Route::post('/edit', [ProductController::class, 'editProduct']);
+        Route::get('/find/{id}', [ProductController::class, 'getProduct']);
     });
 
-    Route::prefix('subscription')->group(function (){
+    Route::prefix('subscription')->group(function () {
         Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
     });
-
 }));

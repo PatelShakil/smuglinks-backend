@@ -54,7 +54,6 @@ class SubscriptionController extends Controller
         $sp->description = $request->description;
         $sp->price= $request->price;
         $sp->duration= $request->duration;
-        $sp->razorpay_payment_id = $request->razorpay_payment_id;
 
         $sp->save();
 
@@ -94,6 +93,7 @@ class SubscriptionController extends Controller
         $usp->enabled = true;
         $usp->start_timestamp = now();
         $usp->uid = $request->header('uid');
+        $usp->razorpay_payment_id = $request->razorpay_payment_id;
 
         $usp->save();
 
