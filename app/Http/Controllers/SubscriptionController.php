@@ -37,7 +37,7 @@ class SubscriptionController extends Controller
             "type" => "required",
             "name" => "required",
             "description"=>"required",
-            "price"=>"required",
+            "prices"=>"required",
             "duration"=>"required"
         ]);  
 
@@ -70,16 +70,6 @@ class SubscriptionController extends Controller
             "message"=>"Plan Created Successfully",
             "data"=>$sp
         ]);
-        
-
-
-
-
-
-
-
-
-
 }
 
     public function subscribePlan(Request $request){

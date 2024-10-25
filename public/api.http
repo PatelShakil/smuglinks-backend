@@ -10,14 +10,13 @@ Content-Type: application/json
 ###
 POST https://api.smuglinks.com/api/admin/subscriptions/create-plan
 uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
-Content-Type: application/json
 
 {
-      "type": "Starter",
-      "name": "Free",
-      "description": "This is free plan with this you can do severel things.",
-      "duration": 7,
-      "prices":[
+    "type": "Starter",
+    "name": "Free",
+    "description": "This is free plan with this you can do severel things.",
+    "duration": 7,
+    "prices":[
         {
             "country_code":"INR",
             "amount":0,
@@ -30,5 +29,5 @@ Content-Type: application/json
             "country_code":"UK",
             "amount":0,
         }
-      ]
+    ]
 }
