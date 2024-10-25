@@ -53,7 +53,7 @@ class SubscriptionController extends Controller
         $sp->type = $request->type;
         $sp->name = $request->name;
         $sp->description = $request->description;
-        $prices = $request->prices;
+        $prices = array($request->prices);
         $sp->duration= $request->duration;
         $sp->save();
         
