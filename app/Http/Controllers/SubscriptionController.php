@@ -12,11 +12,12 @@ use Illuminate\Support\Str;
 class SubscriptionController extends Controller
 {
 
-    public function getAllSubscriptions(Request $request){
+    public function getAllSubscriptions(Request $request)
+    {
 
         $plans = SubscriptionPlan::with('prices')->get();
 
-        if(count($plans) == 0){
+        if (count($plans) == 0) {
             return response()->json([
                 "status" => false,
                 "message" => "Plans are not available",
@@ -25,27 +26,28 @@ class SubscriptionController extends Controller
         }
 
         return response()->json([
-            "status"=>true,
-            "message"=>"Plans Loaded Successfully",
-            "data"=>$plans
+            "status" => true,
+            "message" => "Plans Loaded Successfully",
+            "data" => $plans
         ]);
     }
 
-    public function addPlan(Request $request){
+    public function addPlan(Request $request)
+    {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
             "type" => "required",
             "name" => "required",
-            "description"=>"required",
-            "prices"=>"required",
-            "duration"=>"required"
-        ]);  
+            "description" => "required",
+            "prices" => "required",
+            "duration" => "required"
+        ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 "status" => false,
-                "message"=>$validator->errors()->first(),
-                "data"=>null
+                "message" => $validator->errors()->first(),
+                "data" => null
             ]);
         }
 
@@ -54,10 +56,10 @@ class SubscriptionController extends Controller
         $sp->name = $request->name;
         $sp->description = $request->description;
         $prices = array($request->prices);
-        $sp->duration= $request->duration;
+        $sp->duration = $request->duration;
         $sp->save();
-        
-        foreach ($prices as $p){
+        print_r($request->prices);
+        foreach ($prices as $p) {
             $ab = new PlanPricing();
             $ab->plan_id = $sp->id;
             $ab->country_code = $p->country_code;
@@ -66,18 +68,19 @@ class SubscriptionController extends Controller
         }
 
         return response()->json([
-            "status"=>true,
-            "message"=>"Plan Created Successfully",
-            "data"=>$sp
+            "status" => true,
+            "message" => "Plan Created Successfully",
+            "data" => $sp
         ]);
-}
+    }
 
-    public function subscribePlan(Request $request){
-        $validator = Validator::make($request->all(),[
-            "plan_id"=>"required"
+    public function subscribePlan(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "plan_id" => "required"
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 "status" => false,
                 "message" => $validator->errors()->first(),
@@ -96,12 +99,9 @@ class SubscriptionController extends Controller
         $usp->save();
 
         return response()->json([
-            'status'=>true,
-            'message'=> "Subscribed Plan Successfully",
-            'data'=>$usp
+            'status' => true,
+            'message' => "Subscribed Plan Successfully",
+            'data' => $usp
         ]);
-
     }
-
-
 }
