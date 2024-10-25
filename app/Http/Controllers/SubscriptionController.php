@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PlanPricing;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
@@ -52,10 +53,17 @@ class SubscriptionController extends Controller
         $sp->type = $request->type;
         $sp->name = $request->name;
         $sp->description = $request->description;
-        $sp->price= $request->price;
+        $prices = $request->prices;
         $sp->duration= $request->duration;
-
         $sp->save();
+        
+        foreach ($prices as $p){
+            $ab = new PlanPricing();
+            $ab->plan_id = $sp->id;
+            $ab->country_code = $p->country_code;
+            $ab->amount = $p->amount;
+            $ab->save();
+        }
 
         return response()->json([
             "status"=>true,
