@@ -6,6 +6,7 @@ use App\Models\PlanPricing;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -59,6 +60,8 @@ class SubscriptionController extends Controller
         $sp->duration = $request->duration;
         $sp->save();
         print_r(json_decode($request->prices));
+        Log::info("Request",$request->prices);
+        Log::info("Request p",json_decode($request->prices));
         foreach ($prices as $p) {
             print_r($p);
             $ab = new PlanPricing();
