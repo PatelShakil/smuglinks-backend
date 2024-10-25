@@ -61,7 +61,6 @@ class SubscriptionController extends Controller
         $sp->save();
         print_r(json_decode($request->prices));
         Log::info("Request",$request->prices);
-        Log::info("Request p",str(json_decode($request->prices)));
         foreach ($prices as $p) {
             print_r($p);
             $ab = new PlanPricing();
