@@ -19,7 +19,8 @@ class LinkController extends Controller
         $validator = Validator::make($request->all(),[
             "title"=>"string|required",
             "url"=>"string|url|required",
-            "is_classic"=>"required"
+            "is_classic"=>"required",
+            "type"=>"string|required"
         ]);
 
         if ($validator->fails()) {
@@ -39,7 +40,7 @@ class LinkController extends Controller
         try{
             DB::beginTransaction();
             $link->enabled=true;
-            $link->type = "normal";
+            $link->type = $request->type;
             $link->uid = $uid;
             $link->save();
             DB::commit();

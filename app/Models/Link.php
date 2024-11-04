@@ -15,6 +15,8 @@ class Link extends Model
         'uid', 'name', 'type', 'image', 'enabled','url','priority','is_classic'
     ];
 
+    //type normal,social
+
     public function user()
     {
         return $this->belongsTo(UserMst::class, 'uid', 'uid');
