@@ -77,7 +77,7 @@ response >
 5> /link/add
 method = POST
 parameters >
-title,url,is_classic
+title,url,is_classic,type
 (uid will be present in header)
 response >
 {
