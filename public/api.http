@@ -47,5 +47,5 @@ POST https://api.smuglinks.com/api/common/web-link
 Content-Type: application/json
 
 {
-    "username":"amanshaikh"
+    "username":"testuser"
 }

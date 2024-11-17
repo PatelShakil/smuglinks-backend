@@ -607,6 +607,13 @@ method : GET
 response : {"message":"Product Loaded","status":true,"data":{"id":6,"uid":"nRUJhUP2818wut7bMOaLnafpqCwxXq8wQ013N3WyPZoJgtDRdBlwP9iHzqawObZK","name":"a sdf asdf afasf","description":"this is description here there asdfa sdfas df","category":"sample","action":"link","link":"https:\/\/smuglinks.com","btn_name":"Order Now","enabled":1,"created_at":"2024-10-01T16:06:38.000000Z","updated_at":"2024-10-01T16:06:38.000000Z","images":[{"id":6,"product_id":6,"img":"\/uploads\/products\/1727800344_66fc24188bc1a.png","enabled":1,"created_at":"2024-10-01T16:32:24.000000Z","updated_at":"2024-10-01T16:32:24.000000Z"}]}}
 
 
+29> POST https://api.smuglinks.com/api/common/web-link
+Content-Type: application/json
+
+{
+    "username":"testuser"
+}
+(Check full response manually)
 
 ***// -> APIs was developed and tested ***
 *** To Access any image you need to attach https://api.smuglinks.com/ + <image path> ***
