@@ -19,6 +19,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/signup', [AuthController::class, 'doSignup']);
         Route::post('/login', [AuthController::class, 'doLogin']);
         Route::get('/check-user-exists/{username}', [UserController::class, 'checkUserExists']);
+        Route::post('/web-link',[UserController::class,'getWebLink']);
     });
 
     Route::prefix('/user')->group(function () {

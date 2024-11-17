@@ -40,4 +40,8 @@ class UserMst extends Model
     {
         return $this->hasMany(ProductMst::class, 'uid', 'uid');
     }
+
+    public function links(){
+        return $this->hasMany(Link::class,"uid",'uid');
+    }
 }

@@ -10,6 +10,27 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    public function getWebLink(Request $request){
+        $validator = Validator::make($request->all(),[
+            'username'=>"required|exists:users_mst,username"
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                "status"=>false,
+                "message"=>$validator->errors()->first()
+            ]);
+        }   
+
+        $user = UserMst::where("username",$request->username)
+        ->with(["links.views","products.images","webconfig.font"])->first();
+        return response()->json([
+            "status"=>true,
+            "message"=>"User Found",
+            "data"=>$user
+        ]);
+    }
+
     public function checkUserExists(Request $request, $username)
     {
         if ($username != "") {
