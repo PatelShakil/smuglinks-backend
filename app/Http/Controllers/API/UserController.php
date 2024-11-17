@@ -23,7 +23,7 @@ class UserController extends Controller
         }   
 
         $user = UserMst::where("username",$request->username)
-        ->with(["links.views","products.images","webconfig.font"])->first();
+        ->with(["links.views","products.images"])->first();
         return response()->json([
             "status"=>true,
             "message"=>"User Found",

@@ -41,3 +41,11 @@ Content-Type: application/json
     "plan_id":17,
     "razorpay_payment_id":"absdkfasfdajdsfljasdf"
 }
+
+###
+POST https://api.smuglinks.com/api/common/web-link
+Content-Type: application/json
+
+{
+    "username":"amanshaikh"
+}
