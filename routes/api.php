@@ -20,6 +20,8 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/login', [AuthController::class, 'doLogin']);
         Route::get('/check-user-exists/{username}', [UserController::class, 'checkUserExists']);
         Route::post('/web-link',[UserController::class,'getWebLink']);
+        Route::post('/link-click', [LinkController::class, 'registerLinkClick']);
+
     });
 
     Route::prefix('/user')->group(function () {
@@ -48,7 +50,6 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add', [LinkController::class, 'addLink']);
         Route::get('/get-all', [LinkController::class, 'getAllLinks']);
         Route::get('/analytics', [LinkController::class, 'getAnalytics']);
-        Route::post('/link-click', [LinkController::class, 'registerLinkClick']);
     });
 
     Route::prefix('product')->group(function () {
