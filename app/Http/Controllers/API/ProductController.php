@@ -318,7 +318,7 @@ class ProductController extends Controller
     }
 
     public function getProduct($id){
-        $product = ProductMst::find($id)->with('images')->first();
+        $product = ProductMst::where("id",$id)->with('images')->first();
 
         if($product != null){
             return response()->json([
