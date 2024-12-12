@@ -20,10 +20,10 @@ class UserController extends Controller
                 "status"=>false,
                 "message"=>$validator->errors()->first()
             ]);
-        }   
+        }
 
         $user = UserMst::where("username",$request->username)
-        ->with(["links.views","products.images"])->first();
+        ->with(["links.views","products.images","subscriptions"])->first();
         return response()->json([
             "status"=>true,
             "message"=>"User Found",
