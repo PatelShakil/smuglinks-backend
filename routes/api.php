@@ -50,6 +50,8 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add', [LinkController::class, 'addLink']);
         Route::get('/get-all', [LinkController::class, 'getAllLinks']);
         Route::get('/analytics', [LinkController::class, 'getAnalytics']);
+        Route::post('/get-by-id',[LinkController::class, 'getLinkById']);
+        Route::post('/delete-by-id',[LinkController::class, 'deleteLinkById']);
     });
 
     Route::prefix('product')->group(function () {

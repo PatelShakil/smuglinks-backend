@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class LinkController extends Controller
 {
-    
+
     public function addLink(Request $request){
         $validator = Validator::make($request->all(),[
             "title"=>"string|required",
@@ -129,6 +129,67 @@ class LinkController extends Controller
             "data" =>$link ,
             "message" => "Link click registered successfully."
         ]);
+    }
+
+    public function getLinkById(Request $request){
+        $validator = Validator::make($request->all(), [
+            "id" => "required|exists:links_mst,id"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+        $link = Link::find($request->id);
+
+        if($link!= null){
+            return response()->json([
+                "status" => true,
+                "data" => $link,
+                "message" => "Link fetched successfully"
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => "Link not found"
+            ]);
+        }
+    }
+
+    public function deleteLinkById(Request $request){
+        $validator = Validator::make($request->all(), [
+            "id" => "required|exists:links_mst,id"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+        $link = Link::find($request->id);
+        $link->delete();
+
+        if($link!= null){
+            return response()->json([
+                "status" => true,
+                "data" => null,
+                "message" => "Link Deleted successfully"
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => "Link not found"
+            ]);
+        }
     }
 
 
