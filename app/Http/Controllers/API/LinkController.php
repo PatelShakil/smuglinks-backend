@@ -131,20 +131,9 @@ class LinkController extends Controller
         ]);
     }
 
-    public function getLinkById(Request $request){
-        $validator = Validator::make($request->all(), [
-            "id" => "required|exists:links_mst,id"
-        ]);
+    public function getLinkById($id){
 
-        if ($validator->fails()) {
-            return response()->json([
-                "status" => false,
-                "data" => null,
-                "message" => $validator->errors()->first()
-            ]);
-        }
-
-        $link = Link::find($request->id);
+        $link = Link::where('id',$id)->first();
 
         if($link!= null){
             return response()->json([
@@ -190,6 +179,44 @@ class LinkController extends Controller
                 "message" => "Link not found"
             ]);
         }
+    }
+
+    public function editLink(Request $request){
+        $validator = Validator::make($request->all(),[
+            "id"=>"required|exists:links_mst,id",
+            "title"=>"string|required",
+            "url"=>"string|url|required",
+            "is_classic"=>"required",
+            "type"=>"string|required",
+            "enabled"=>"required",
+            "priority"=>"required"
+        ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    "status" => false,
+                    "data" => null,
+                    "message" => $validator->errors()->first()
+                ]);
+            }
+
+            $link = Link::find($request->id);
+            $link->name = $request->title;
+            $link->url = $request->url;
+            $link->is_classic =  boolval($request->is_classic);
+            $link->type = $request->type;
+            $link->enabled = boolval($request->enabled);
+            $link->priority = $request->priority;
+            $link->save();
+            return response()->json([
+                "status" => true,
+                "data" => $link,
+                "message" => "Link updated successfully"
+            ]);
+
+
+
+
     }
 
 
