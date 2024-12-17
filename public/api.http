@@ -77,7 +77,6 @@ Content-Type: application/json
 ###
 POST https://api.smuglinks.com/api/product/edit
 uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
-Content-Type: application/json
 
 {
     "id": 7,
@@ -85,7 +84,7 @@ Content-Type: application/json
     "description": "this is description here there asdfa sdfas df",
     "category": "sample",
     "action": "link",
-    "link": "https:\/\/smuglinks.com",
+    "link": "https://smuglinks.com",
     "btn_name": "Order Now",
-    "enabled": 1,
+    "enabled": 1
 }
