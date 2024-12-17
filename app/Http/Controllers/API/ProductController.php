@@ -268,7 +268,7 @@ class ProductController extends Controller
     {
         // Validate the input fields
         $validator = Validator::make($request->all(), [
-            'id'=>'required|exists:products_mst,id',
+            'id'=>'required',
             'name' => 'required',
             'description' => 'required',
             'category' => 'required',
