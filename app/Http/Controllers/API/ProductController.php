@@ -278,7 +278,7 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            print_r($request->id);
+            print_r($request);
             return response()->json([
                 "status" => false,
                 "message" => $validator->errors()->first()
