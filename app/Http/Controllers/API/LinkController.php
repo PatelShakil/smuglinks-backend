@@ -37,6 +37,11 @@ class LinkController extends Controller
         $link->name = $request->title;
         $link->url = $request->url;
         $link->is_classic =  boolval($request->is_classic);
+
+        if ($request->file('image') != null) {
+            $imagePath = $request->file('image')->store('public/links');
+            $link->image = str_replace("public", "public/storage", $imagePath);
+        }
         try{
             DB::beginTransaction();
             $link->enabled=true;
