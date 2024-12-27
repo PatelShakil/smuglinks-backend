@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class AdminMst extends Model
 {
     use HasFactory;
+    protected $table = 'admin_mst';
+    protected $fillable = [
+        'id',
+        'name',
+        'password',
+        'email',
+        'uid'
+    ];
+
+
+    
 }
