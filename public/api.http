@@ -96,18 +96,18 @@ POST https://api.smuglinks.com/api/admin/common/login
 Content-Type: application/json
 
 {
-    "email":"admin",
-    "password":"admin"
+    "email":"aadil@smug.link",
+    "password":"aadil@jagli"
 }
 
 ###
 POST https://api.smuglinks.com/api/admin/add-admin
-uid : abcd
+uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
 Content-Type: application/json
 
 {
     "email":"aadil@smug.link",
-    "password":"aadil",
+    "password":"aadil@jagli",
     "name":"Aadil Jagliwala"
 }
 

@@ -26,7 +26,7 @@ class AdminController extends Controller
         }
 
         $admin = AdminMst::where("email",$request->email)
-        ->where("password",bcrypt($request->password))->first();
+        ->where("password",$request->password)->first();
 
         if($admin){
             return response()->json([
@@ -62,7 +62,7 @@ class AdminController extends Controller
         $admin = new AdminMst();
         $admin->email = $request->email;
         $admin->uid = Str::random(64);
-        $admin->password =  bcrypt($request->password);
+        $admin->password = $request->password;
         $admin->name = $request->name;
 
         $admin->save();

@@ -17,6 +17,10 @@ class AdminMst extends Model
         'uid'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
 
-    
+
+
 }
