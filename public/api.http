@@ -89,3 +89,26 @@ Content-Type: application/json
     "btn_name": "Order",
     "enabled":false
 }
+
+
+###
+POST https://api.smuglinks.com/api/admin/common/login
+Content-Type: application/json
+
+{
+    "email":"admin",
+    "password":"admin"
+}
+
+###
+POST https://api.smuglinks.com/api/admin/add-admin
+uid : abcd
+Content-Type: application/json
+
+{
+    "email":"aadil@smug.link",
+    "password":"aadil",
+    "name":"Aadil Jagliwala"
+}
+
+###

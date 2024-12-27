@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AdminMst;
 use App\Models\UserMst;
 use Closure;
 use Illuminate\Http\Request;
@@ -18,10 +19,14 @@ class ProtectRoute
     {
         date_default_timezone_set("Asia/Kolkata");
 
+
+
         if (!str_contains($request->path(), "/common")) {
             if (UserMst::where("uid", $request->header('uid'))->where("active", true)->exists()) {
                 return $next($request);
-            } else {
+            } else if(AdminMst::where("uid", $request->header('uid'))->exists()){
+                return $next($request);
+            }else{
                 return response()->json([
                     "message" => "Unauthorized access",
                     "status" => false,
