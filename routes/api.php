@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\ProductController;
@@ -41,9 +42,18 @@ Route::group(['middleware' => "api"], (function () {
     });
 
     Route::prefix('/admin')->group(function () {
+        Route::prefix('/common')->group(function () {
+        Route::post('/login',[AdminController::class,'doLogin']);
+
+        });
+
+        Route::post('/add-admin',[AdminController::class,'addAdmin']);
+
+
         Route::prefix('/subscriptions')->group(function () {
             Route::post('/create-plan', [SubscriptionController::class, 'addPlan']);
         });
+
     });
 
     Route::prefix('link')->group(function () {
