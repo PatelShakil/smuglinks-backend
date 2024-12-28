@@ -225,15 +225,13 @@ class LinkController extends Controller
     }
 
     public function uploadPdf(Request $request){
-        $validator = Validator::make($request->all(),[
-            "pdf"=>"required|mimes:pdf"
-        ]);
 
-        if ($validator->fails()) {
+
+        if ($request->file('pdf') == null) {
             return response()->json([
                 "status" => false,
                 "data" => null,
-                "message" => $validator->errors()->first()
+                "message" => "PDF not uploaded"
             ]);
         }
 
