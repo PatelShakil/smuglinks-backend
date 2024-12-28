@@ -18,7 +18,7 @@ class LinkController extends Controller
     public function addLink(Request $request){
         $validator = Validator::make($request->all(),[
             "title"=>"string|required",
-            "url"=>"string|url|required",
+            "url"=>"string|required",
             "is_classic"=>"required",
             "type"=>"string|required"
         ]);
