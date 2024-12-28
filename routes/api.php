@@ -50,8 +50,10 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/add-admin',[AdminController::class,'addAdmin']);
 
 
-        Route::prefix('/subscriptions')->group(function () {
+        Route::prefix('/subscription')->group(function () {
             Route::post('/create-plan', [SubscriptionController::class, 'addPlan']);
+            Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
+
         });
 
     });
