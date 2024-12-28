@@ -239,7 +239,7 @@ class LinkController extends Controller
 
 
         if ($request->file('pdf') != null) {
-            $pdfPath = $request->file('pdf')->store('public/pdfs');
+            $pdfPath = $request->file('pdf')->store('public/uploads');
             $pdfFile = str_replace("public", "public/storage", $pdfPath);
             return response()->json([
                 "status" => true,
