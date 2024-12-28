@@ -63,6 +63,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/find/{id}',[LinkController::class, 'getLinkById']);
         Route::post('/delete',[LinkController::class, 'deleteLinkById']);
         Route::post('/edit',[LinkController::class, 'editLink']);
+        Route::post('/upload-pdf',[LinkController::class, 'uploadPdf']);
     });
 
     Route::prefix('product')->group(function () {

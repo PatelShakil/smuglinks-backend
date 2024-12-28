@@ -224,6 +224,37 @@ class LinkController extends Controller
 
     }
 
+    public function uploadPdf(Request $request){
+        $validator = Validator::make($request->all(),[
+            "pdf"=>"required|mimes:pdf"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => $validator->errors()->first()
+            ]);
+        }
+
+
+        if ($request->file('pdf') != null) {
+            $pdfPath = $request->file('pdf')->store('public/pdfs');
+            $pdfFile = str_replace("public", "public/storage", $pdfPath);
+            return response()->json([
+                "status" => true,
+                "data" => $pdfFile,
+                "message" => "PDF uploaded successfully"
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "data" => null,
+                "message" => "PDF not uploaded"
+            ]);
+        }
+    }
+
 
 
 
