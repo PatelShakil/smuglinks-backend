@@ -152,3 +152,7 @@ Content-Type: application/json
     ],
     "duration":365
 }
+###
+GET https://api.smuglinks.com/api/admin/theme/get-all
+uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
+Content-Type: application/json

@@ -32,8 +32,7 @@ class ThemeController extends Controller
         $validator = Validator::make($request->all(),[
             'name'=>'required',
             'type'=>'required',
-            'description'=>'required',
-            'img'=>'required|jpg|png|jpeg|gif'
+            'description'=>'required'
         ]);
 
         if($validator->fails()){
