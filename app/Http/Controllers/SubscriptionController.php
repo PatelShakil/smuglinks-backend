@@ -230,6 +230,14 @@ class SubscriptionController extends Controller
 
     public function deleteSubscription($id){
         $us = UserSubscription::find($id);
+        if($us == null){
+            return response()->json([
+                "status" => false,
+                "message" => "Subscription Not Found",
+                "data" => null
+            ]);
+        }
+        
         $us->delete();
 
         return response()->json([
