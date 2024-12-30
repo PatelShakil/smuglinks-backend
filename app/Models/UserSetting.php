@@ -12,7 +12,7 @@ class UserSetting extends Model
     protected $table = 'users_settings';
 
     protected $fillable = [
-        'uid', 'title', 'bio', 'category'
+        'uid', 'title', 'bio', 'category','tab_name'
     ];
 
     public function user()

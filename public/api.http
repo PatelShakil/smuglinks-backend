@@ -112,3 +112,10 @@ Content-Type: application/json
 }
 
 ###
+POST https://api.smuglinks.com/api/user/change-tab-name
+uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
+Content-Type: application/json
+
+{
+    "tab_name":"My Distributes"
+}

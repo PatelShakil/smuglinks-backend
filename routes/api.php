@@ -39,6 +39,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::post('/btn/set-btn', [WebButtonController::class, 'setButton']);
         Route::get('/fonts/get-all', [WebButtonController::class, 'getFonts']);
         Route::post('/fonts/set-font', [WebButtonController::class, 'selectFont']);
+        Route::post('/update-tab-name',[UserController::class, 'updateTabName']);
     });
 
     Route::prefix('/admin')->group(function () {

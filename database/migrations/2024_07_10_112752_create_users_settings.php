@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("title")->nullable();
             $table->string("bio")->nullable();
             $table->string("category")->nullable();
+            $table->string("tab_name")->default("Products");
             $table->timestamps();
         });
     }

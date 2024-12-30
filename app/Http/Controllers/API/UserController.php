@@ -230,4 +230,36 @@ class UserController extends Controller
 
     }
 
+    public function updateTabName(Request $request){
+        $validator = Validator::make($request->all(),[
+            "tab_name" => "required"
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status"=>false,
+                "message"=>$validator->errors()->first(),
+                "data"=>null
+            ]);
+        }
+
+        $user = UserSetting::where("uid",$request->header("uid"))->first();
+
+        if($user){
+            $user->tab_name = $request->tab_name;
+            $user->save();
+            return response()->json([
+                "status"=>true,
+                "message"=>"Tab Name updated !!!",
+                "data" => $user
+            ]);
+        }else{
+            return response()->json([
+                "status" => false,
+                "message" => "User Not Found",
+                "data" => null
+            ]);
+        }
+    }
+
 }
