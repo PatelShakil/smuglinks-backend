@@ -211,7 +211,7 @@ class SubscriptionController extends Controller
     }
 
     public function getUsersByPlan($id){
-        $users = UserSubscription::where('plan_id',$id)->get();
+        $users = SubscriptionPlan::where("id",$id)->with("users")->get();
 
         if(count($users) == 0){
             return response()->json([
