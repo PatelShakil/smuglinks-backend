@@ -111,4 +111,70 @@ class SubscriptionController extends Controller
             'data' => $usp
         ]);
     }
+
+    public function addPrice(Request $request){
+        $validator = Validator::make($request->all(), [
+            "plan_id" => "required",
+            "country_code" => "required|string",
+            "amount" => "required|numeric"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        $ab = new PlanPricing();
+        $ab->plan_id = $request->plan_id;
+        $ab->country_code = $request->country_code;
+        $ab->amount = $request->amount;
+        $ab->save();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Price Added Successfully",
+            "data" => $ab
+        ]);
+    }
+
+    public function updatePrice(Request $request){
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "country_code" => "required|string",
+            "amount" => "required|numeric"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        $ab = PlanPricing::find($request->id);
+        $ab->country_code = $request->country_code;
+        $ab->amount = $request->amount;
+        $ab->save();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Price Updated Successfully",
+            "data" => $ab
+        ]);
+    }
+
+    public function deletePrice($id){
+        $ab = PlanPricing::find($id);
+        $ab->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Price Deleted Successfully",
+            "data" => $ab
+        ]);
+    }
 }

@@ -47,7 +47,7 @@ POST https://api.smuglinks.com/api/common/web-link
 Content-Type: application/json
 
 {
-    "username":"testuser"
+    "username":"sheikhaman"
 }
 
 ###
@@ -100,6 +100,18 @@ Content-Type: application/json
     "password":"aadil@jagli"
 }
 
+
+###
+POST https://api.smuglinks.com/api/user/update-tab-name
+uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
+Content-Type: application/json
+
+{
+    "tab_name":"My Distributes"
+}
+
+
+
 ###
 POST https://api.smuglinks.com/api/admin/add-admin
 uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
@@ -112,10 +124,27 @@ Content-Type: application/json
 }
 
 ###
-POST https://api.smuglinks.com/api/user/change-tab-name
-uid : OXFoDfIW1871485gBq1umSDphzrjnFGxI7DcQdICPcnkK4l5jt9Oig64DqaTIgrx
+POST https://api.smuglinks.com/api/admin/subscription/create-plan
+uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
 Content-Type: application/json
 
 {
-    "tab_name":"My Distributes"
+    "name":"Paid Plan",
+    "type":"Premium",
+    "description":"in this plan you can get all the premium things",
+    "prices":[
+        {
+            "country_code":"INR",
+            "amount":699
+        },
+        {
+            "country_code":"US",
+            "amount":10
+        },
+        {
+            "country_code":"UK",
+            "amount":10
+        }
+    ],
+    "duration":365
 }

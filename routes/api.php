@@ -54,6 +54,9 @@ Route::group(['middleware' => "api"], (function () {
         Route::prefix('/subscription')->group(function () {
             Route::post('/create-plan', [SubscriptionController::class, 'addPlan']);
             Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
+            Route::post('/add-price',[SubscriptionController::class, 'addPrice']);
+            Route::delete('/delete-price/{id}',[SubscriptionController::class, 'deletePrice']);
+            Route::post('/update-price',[SubscriptionController::class, 'updatePrice']);
 
         });
 
