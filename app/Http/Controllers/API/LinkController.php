@@ -119,7 +119,7 @@ class LinkController extends Controller
             ]);
         }
 
-        $link = Link::find($request->id)->first();
+        $link = Link::where("id",$request->id)->first();
 
         // Create a new LinksView record
         $l = new LinksView();
