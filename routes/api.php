@@ -57,6 +57,7 @@ Route::group(['middleware' => "api"], (function () {
             Route::post('/add-price',[SubscriptionController::class, 'addPrice']);
             Route::delete('/delete-price/{id}',[SubscriptionController::class, 'deletePrice']);
             Route::post('/update-price',[SubscriptionController::class, 'updatePrice']);
+            Route::post('/update-plan',[SubscriptionController::class, 'updatePlan']);
 
         });
 

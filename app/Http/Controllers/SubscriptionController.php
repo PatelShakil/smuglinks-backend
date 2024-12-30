@@ -177,4 +177,37 @@ class SubscriptionController extends Controller
             "data" => $ab
         ]);
     }
+
+
+    public function updatePlan(Request $request){
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "type" => "required|string",
+            "name" => "required|string",
+            "description" => "required|string",
+            "duration" => "required|integer"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        $sp = SubscriptionPlan::find($request->id);
+        $sp->type = $request->type;
+        $sp->name = $request->name;
+        $sp->description = $request->description;
+        $sp->duration = $request->duration;
+        $sp->save();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Plan Updated Successfully",
+            "data" => $sp
+        ]);
+    }
+
 }
