@@ -228,4 +228,15 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    public function deleteSubscription($id){
+        $us = UserSubscription::find($id);
+        $us->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "Subscription Deleted Successfully",
+            "data" => $us
+        ]);
+    }
+
 }

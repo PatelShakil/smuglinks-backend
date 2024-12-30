@@ -60,6 +60,7 @@ Route::group(['middleware' => "api"], (function () {
             Route::post('/update-plan',[SubscriptionController::class, 'updatePlan']);
 
             Route::get('/get-users/{id}',[SubscriptionController::class, 'getUsersByPlan']);
+            Route::delete('/delete-subscription/{id}',[SubscriptionController::class, 'deleteSubscription']);
         });
 
     });
