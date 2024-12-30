@@ -210,4 +210,22 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    public function getUsersByPlan($id){
+        $users = UserSubscription::where('plan_id',$id)->get();
+
+        if(count($users) == 0){
+            return response()->json([
+                "status" => false,
+                "message" => "No Users Found",
+                "data" => null
+            ]);
+        }
+
+        return response()->json([
+            "status" => true,
+            "message" => "Users Found",
+            "data" => $users
+        ]);
+    }
+
 }
