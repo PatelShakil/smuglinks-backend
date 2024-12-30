@@ -28,35 +28,45 @@ class ThemeController extends Controller
         }
     }
 
-    public function addTheme(Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'type'=>'required',
-            'description'=>'required'
+    public function addTheme(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'type' => 'required',
+            'description' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'message'=>$validator->errors()->first(),
-                'status'=>false,
-                'data'=>null
+                'message' => $validator->errors()->first(),
+                'status' => false,
+                'data' => null
             ]);
         }
-        $theme = new WebTheme();
-        $theme->name = $request->name;
-        $theme->type = $request->type;
-        $theme->description = $request->description;
+        if ($request->hasFile('img')) {
+            $theme = new WebTheme();
+            $theme->name = $request->name;
+            $theme->type = $request->type;
+            $theme->description = $request->description;
 
-        $imagePath = $request->file('img')->store('public/theme');
-        $theme->img = str_replace("public", "public/storage", $imagePath);
-        $theme->enabled = true;
-        $theme->save();
-        return response()->json([
-            "message"=>"Theme Added successfully",
-            "status"=>true,
-            "data"=>null
-        ]);
 
+            $imagePath = $request->file('img')->store('public/theme');
+            $theme->img = str_replace("public", "public/storage", $imagePath);
+
+            $theme->enabled = true;
+            $theme->save();
+            return response()->json([
+                "message" => "Theme Added successfully",
+                "status" => true,
+                "data" => null
+            ]);
+        } else {
+            return response()->json([
+                "message" => "Image not uploaded",
+                "status" => false,
+                "data" => null
+            ]);
+        }
     }
 
     public function selectTheme(Request $request)
@@ -84,34 +94,36 @@ class ThemeController extends Controller
                 'status' => true,
                 'data' => null
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "Config not available",
                 'status' => false,
                 'data' => null
             ]);
-
         }
     }
 
 
-    public function setBg(Request $request){
-        $validator = Validator::make($request->all(),[
-            'bg_type'=>'required'
-        ]
+    public function setBg(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'bg_type' => 'required'
+            ]
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'message' =>$validator->errors()->first(),
-                'data'=>null,
-                'status'=>false
+                'message' => $validator->errors()->first(),
+                'data' => null,
+                'status' => false
             ]);
         }
 
         $bg_type = $request->bg_type;
 
-        if($bg_type > 3 || $bg_type <= 0){
+        if ($bg_type > 3 || $bg_type <= 0) {
             return response()->json([
                 'message' => "Enter valid bg type!!!",
                 'data' => null,
@@ -119,9 +131,9 @@ class ThemeController extends Controller
             ]);
         }
 
-        $webConfig = WebConfig::where("uid",$request->header("uid"))->first();
+        $webConfig = WebConfig::where("uid", $request->header("uid"))->first();
 
-        if($webConfig == null){
+        if ($webConfig == null) {
             return response()->json([
                 'message' => "Web Config not found",
                 'data' => null,
@@ -132,10 +144,10 @@ class ThemeController extends Controller
         $webConfig->bg_type = $bg_type;
 
         switch ($bg_type) {
-            case 1 : {
-                $v = Validator::make($request->all(),[
-                    "bg_color"=>'required'
-                ]);
+            case 1: {
+                    $v = Validator::make($request->all(), [
+                        "bg_color" => 'required'
+                    ]);
 
                     if ($v->fails()) {
                         return response()->json([
@@ -145,14 +157,14 @@ class ThemeController extends Controller
                         ]);
                     }
 
-                $webConfig->bg_color = $request->bg_color;
-                break;
-            }
-            case 2 : {
-                $v = Validator::make($request->all(),[
-                    "start_color"=>'required',
-                    'end_color'=>'required'
-                ]);
+                    $webConfig->bg_color = $request->bg_color;
+                    break;
+                }
+            case 2: {
+                    $v = Validator::make($request->all(), [
+                        "start_color" => 'required',
+                        'end_color' => 'required'
+                    ]);
 
                     if ($v->fails()) {
                         return response()->json([
@@ -162,14 +174,14 @@ class ThemeController extends Controller
                         ]);
                     }
 
-                $webConfig->start_color = $request->start_color;
-                $webConfig->end_color = $request->end_color;
-                break;
-            }
-            case 3 : {
-                $v = Validator::make($request->all(),[
-                    'image'=>"required|image"
-                ]);
+                    $webConfig->start_color = $request->start_color;
+                    $webConfig->end_color = $request->end_color;
+                    break;
+                }
+            case 3: {
+                    $v = Validator::make($request->all(), [
+                        'image' => "required|image"
+                    ]);
 
                     if ($v->fails()) {
                         return response()->json([
@@ -179,7 +191,7 @@ class ThemeController extends Controller
                         ]);
                     }
 
-                    if($webConfig->bg_img){
+                    if ($webConfig->bg_img) {
                         $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/bg/" . basename($webConfig->bg_img);
                         if (file_exists($filePath)) {
                             unlink($filePath); // Delete the file
@@ -187,23 +199,24 @@ class ThemeController extends Controller
                     }
 
                     $imagePath = $request->file('image')->store('public/bg');
-                $webConfig->bg_img = str_replace("public", "public/storage", $imagePath);
-                break;
-            }
+                    $webConfig->bg_img = str_replace("public", "public/storage", $imagePath);
+                    break;
+                }
         }
 
         $webConfig->save();
 
         return response()->json([
-            "message"=>"Background Updated Successfully",
-            "data"=>null,
-            "status"=>true
+            "message" => "Background Updated Successfully",
+            "data" => null,
+            "status" => true
         ]);
     }
 
-    public function deleteTheme($id){
+    public function deleteTheme($id)
+    {
         $theme = WebTheme::find($id);
-        if($theme == null){
+        if ($theme == null) {
             return response()->json([
                 'message' => "Theme not found",
                 'data' => null,
@@ -218,40 +231,40 @@ class ThemeController extends Controller
             'data' => null,
             'status' => true
         ]);
-
     }
 
-    public function updateTheme(Request $request){
-        $validator = Validator::make($request->all(),[
-            'id'=>'required',
-            'name'=>'required',
-            'type'=>'required',
-            'description'=>'required',
-            'img'=>'sometimes|nullable|image'
+    public function updateTheme(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required',
+            'type' => 'required',
+            'description' => 'required',
+            'img' => 'sometimes|nullable|image'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'message'=>$validator->errors()->first(),
-                'data'=>null,
-               'status'=>false
+                'message' => $validator->errors()->first(),
+                'data' => null,
+                'status' => false
             ]);
         }
 
         $theme = WebTheme::find($request->id);
-        if($theme == null){
+        if ($theme == null) {
             return response()->json([
                 'message' => "Theme not found",
                 'data' => null,
-               'status' => false
+                'status' => false
             ]);
         }
 
         $theme->name = $request->name;
         $theme->type = $request->type;
         $theme->description = $request->description;
-        if($request->hasFile('img')){
-            $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/theme/". basename($theme->img);
+        if ($request->hasFile('img')) {
+            $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/theme/" . basename($theme->img);
             if (file_exists($filePath)) {
                 unlink($filePath); // Delete the file
             }
@@ -260,10 +273,9 @@ class ThemeController extends Controller
         }
         $theme->save();
         return response()->json([
-            "message"=>"Theme Updated successfully",
-            "data"=>null,
-           'status'=>true
+            "message" => "Theme Updated successfully",
+            "data" => null,
+            'status' => true
         ]);
     }
-
 }

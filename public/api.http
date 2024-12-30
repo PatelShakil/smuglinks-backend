@@ -156,3 +156,26 @@ Content-Type: application/json
 GET https://api.smuglinks.com/api/admin/theme/get-all
 uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
 Content-Type: application/json
+###
+
+POST https://api.smuglinks.com/api/admin/theme/add-theme
+uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="img"; filename="C:/Users/Acer/Downloads/download.jpg"
+Content-Type: image/jpeg
+
+--boundary
+Content-Disposition: form-data; name="name"
+
+New Theme
+--boundary
+Content-Disposition: form-data; name="description"
+
+This is a new theme description.
+--boundary
+Content-Disposition: form-data; name="type"
+
+Premium
+--boundary--
