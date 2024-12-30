@@ -123,7 +123,7 @@ Content-Type: application/json
     "name":"Aadil Jagliwala"
 }
 ###
-DELETE https://api.smuglinks.com/api/admin/subscription/delete-subscription/56
+DELETE https://api.smuglinks.com/api/admin/subscription/delete-subscription/5
 uid : KH8lkbHWycIxEUiqxEDMWMfmFyxmK7i1Szhgeg9w1OSeTACmkNOtwwZcyOeeprRh
 Content-Type: application/json
 

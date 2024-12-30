@@ -63,6 +63,13 @@ Route::group(['middleware' => "api"], (function () {
             Route::delete('/delete-subscription/{id}',[SubscriptionController::class, 'deleteSubscription']);
         });
 
+        Route::prefix('/theme')->group(function () {
+            Route::post('/add-theme', [ThemeController::class, 'addTheme']);
+            Route::get('/get-all', [ThemeController::class, 'getAllTheme']);
+            Route::delete('/delete-theme/{id}', [ThemeController::class, 'deleteTheme']);
+            Route::post('/update-theme', [ThemeController::class, 'updateTheme']);
+        });
+
     });
 
     Route::prefix('link')->group(function () {

@@ -28,6 +28,38 @@ class ThemeController extends Controller
         }
     }
 
+    public function addTheme(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name'=>'required',
+            'type'=>'required',
+            'description'=>'required',
+            'img'=>'required|jpg|png|jpeg|gif'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'message'=>$validator->errors()->first(),
+                'status'=>false,
+                'data'=>null
+            ]);
+        }
+        $theme = new WebTheme();
+        $theme->name = $request->name;
+        $theme->type = $request->type;
+        $theme->description = $request->description;
+
+        $imagePath = $request->file('img')->store('public/theme');
+        $theme->img = str_replace("public", "public/storage", $imagePath);
+        $theme->enabled = true;
+        $theme->save();
+        return response()->json([
+            "message"=>"Theme Added successfully",
+            "status"=>true,
+            "data"=>null
+        ]);
+
+    }
+
     public function selectTheme(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -167,6 +199,71 @@ class ThemeController extends Controller
             "message"=>"Background Updated Successfully",
             "data"=>null,
             "status"=>true
+        ]);
+    }
+
+    public function deleteTheme($id){
+        $theme = WebTheme::find($id);
+        if($theme == null){
+            return response()->json([
+                'message' => "Theme not found",
+                'data' => null,
+                'status' => false
+            ]);
+        }
+
+        $theme->enabled = false;
+        $theme->save();
+        return response()->json([
+            'message' => "Theme Deleted Successfully",
+            'data' => null,
+            'status' => true
+        ]);
+
+    }
+
+    public function updateTheme(Request $request){
+        $validator = Validator::make($request->all(),[
+            'id'=>'required',
+            'name'=>'required',
+            'type'=>'required',
+            'description'=>'required',
+            'img'=>'sometimes|nullable|image'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'message'=>$validator->errors()->first(),
+                'data'=>null,
+               'status'=>false
+            ]);
+        }
+
+        $theme = WebTheme::find($request->id);
+        if($theme == null){
+            return response()->json([
+                'message' => "Theme not found",
+                'data' => null,
+               'status' => false
+            ]);
+        }
+
+        $theme->name = $request->name;
+        $theme->type = $request->type;
+        $theme->description = $request->description;
+        if($request->hasFile('img')){
+            $filePath = "/home/u533961363/domains/api.smuglinks.com/public_html/public/storage/theme/". basename($theme->img);
+            if (file_exists($filePath)) {
+                unlink($filePath); // Delete the file
+            }
+            $imagePath = $request->file('img')->store('public/theme');
+            $theme->img = str_replace("public", "public/storage", $imagePath);
+        }
+        $theme->save();
+        return response()->json([
+            "message"=>"Theme Updated successfully",
+            "data"=>null,
+           'status'=>true
         ]);
     }
 
