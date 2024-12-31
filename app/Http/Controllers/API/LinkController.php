@@ -88,7 +88,7 @@ class LinkController extends Controller
     public function getAnalytics(Request $request){
         $links = Link::where("uid",$request->header('uid'))
         ->with("views")
-        ->first();
+        ->get();
 
         $web = WebConfig::where("uid",$request->header('uid'))
         ->with("views")
