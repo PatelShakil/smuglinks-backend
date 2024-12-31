@@ -70,6 +70,12 @@ Route::group(['middleware' => "api"], (function () {
             Route::post('/update-theme', [ThemeController::class, 'updateTheme']);
         });
 
+        Route::prefix('/font')->group(function () {
+            Route::get('/get-all', [WebButtonController::class, 'getFonts']);
+            Route::delete('/delete-font/{id}', [WebButtonController::class, 'deleteFont']);
+            Route::post('/update-font', [WebButtonController::class, 'updateFont']);
+        });
+
     });
 
     Route::prefix('link')->group(function () {
