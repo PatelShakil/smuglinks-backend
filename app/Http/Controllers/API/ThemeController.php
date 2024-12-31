@@ -224,7 +224,7 @@ class ThemeController extends Controller
             ]);
         }
 
-        $theme->enabled = false;
+        $theme->enabled = !$theme->enabled;
         $theme->save();
         return response()->json([
             'message' => "Theme Deleted Successfully",
