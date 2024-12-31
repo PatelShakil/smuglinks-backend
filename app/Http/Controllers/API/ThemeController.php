@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminMst;
 use App\Models\WebConfig;
 use App\Models\WebTheme;
 use Illuminate\Http\Request;
@@ -12,6 +13,23 @@ class ThemeController extends Controller
 {
     public function getAllTheme()
     {
+        $admin = AdminMst::where("uid", request()->header("uid"))->first();
+        if($admin != null){
+            $data = WebTheme::all();
+            if ($data != null) {
+                return response()->json([
+                    "message" => "Theme Loaded successfully",
+                    "status" => true,
+                    "data" => $data
+                ]);
+            } else {
+                return response()->json([
+                    "message" => "Theme Not Found",
+                    "status" => false,
+                    "data" => null
+                ]);
+            }
+        }
         $data = WebTheme::where("enabled", true)->get();
         if ($data != null) {
             return response()->json([
