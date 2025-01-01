@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OTPMail;
 use App\Models\UserMst;
 use App\Models\UserSetting;
 use App\Models\WebConfig;
@@ -210,10 +211,11 @@ class AuthController extends Controller
         $otp = rand(100000, 999999);
         // Send the OTP to the user's email
         // Send OTP via email
-        Mail::raw("Your OTP is: $otp\n\n\nThanks and Regards\nSmug.link team", function ($message) use ($email) {
-            $message->to($email)
-                ->subject('Password Reset OTP');
-        });
+        // Mail::raw("Your OTP is: $otp\n\n\nThanks and Regards\nSmug.link team", function ($message) use ($email) {
+        //     $message->to($email)
+        //         ->subject('Password Reset OTP');
+        // });
+        Mail::to($email)->send(new OTPMail($otp));
 
         return response()->json([
             "status" => true,
