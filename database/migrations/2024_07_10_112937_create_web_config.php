@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string("start_color")->nullable();
             $table->string("end_color")->nullable();
             $table->string("bg_img")->nullable();
+            $table->bigInteger("web_views")->default(0);
             $table->timestamps();
         });
     }

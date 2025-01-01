@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\UserMst;
 use App\Models\UserSetting;
+use App\Models\WebConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,6 +22,11 @@ class UserController extends Controller
                 "message"=>$validator->errors()->first()
             ]);
         }
+
+        //update web views
+        $webConfig = WebConfig::where("uid",UserMst::where("username",$request->username)->first()->uid)->first();
+        $webConfig->web_views = $webConfig->web_views + 1;
+        $webConfig->save();
 
         $user = UserMst::where("username",$request->username)
         ->with(["links.views","products.images","subscriptions","settings","webConfig"])->first();

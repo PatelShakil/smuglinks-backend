@@ -24,7 +24,8 @@ class WebConfig extends Model
         'bg_color',
         'start_color',
         'end_color',
-        'bg_img'
+        'bg_img',
+        'web_views'
     ];
 
     public function user()

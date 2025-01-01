@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -94,7 +95,7 @@ class AuthController extends Controller
             $setting = new UserSetting();
             $setting->uid = $user->uid;
             $setting->save();
-            $webConfig =new WebConfig();
+            $webConfig = new WebConfig();
             $webConfig->uid = $user->uid;
             $webConfig->save();
 
@@ -179,5 +180,81 @@ class AuthController extends Controller
         ]);
     }
 
+    public function forgotPassword(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            "email" => "required|email",
+        ]);
 
+        // If validation fails, return the first error
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        // Find the user by UID
+        $user = UserMst::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json([
+                "status" => false,
+                "message" => "User not found",
+                "data" => null
+            ]);
+        }
+        $email = $user->email;
+        // Generate a an otp and send it to the user's email
+        $otp = rand(100000, 999999);
+        // Send the OTP to the user's email
+        // Send OTP via email
+        Mail::raw("Your OTP is: $otp\n\n\nThanks and Regards\nSmug.link team", function ($message) use ($email) {
+            $message->to($email)
+                ->subject('Password Reset OTP');
+        });
+
+        return response()->json([
+            "status" => true,
+            "message" => "OTP has been sent to your email",
+            "data" => $otp
+        ]);
+    }
+
+    public function verifyForgotPassword(Request $request){
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            "email" => "required|email",
+            "new_password" => "required|min:8" // 'confirmed' ensures password_confirmation is provided and matches
+        ]);
+
+        // If validation fails, return the first error
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "data" => null
+            ]);
+        }
+
+        // Find the user by UID
+        $user = UserMst::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json([
+                "status" => false,
+                "message" => "User not found",
+                "data" => null
+            ]);
+        }
+
+        // Verify the current password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return response()->json([
+            "status" => true,
+            "message" => "Password has been reset successfully",
+            "data" => null
+        ]);
+    }
 }
