@@ -103,5 +103,5 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/get-all', [SubscriptionController::class, 'getAllSubscriptions']);
     });
  Route::get('/get-current', [SubscriptionController::class, 'getCurrentSubscriptions']);
-    });
+   
 }));
