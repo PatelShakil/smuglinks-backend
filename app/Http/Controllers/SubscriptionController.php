@@ -247,4 +247,22 @@ class SubscriptionController extends Controller
         ]);
     }
 
+
+public function getCurrentSubscriptions(Request    $r){
+        $us = UserSubscription::where('uid',$r->header('uid'))->get();
+        if($us == null){
+            return response()->json([
+                "status" => false,
+                "message" => "Subscription Not Found",
+                "data" => null
+            ]);
+        }
+
+        return response()->json([
+            "status" => true,
+            "message" => "Subscription Deleted Successfully",
+            "data" => $us
+        ]);
+    }
+
 }
