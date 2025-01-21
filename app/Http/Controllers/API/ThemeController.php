@@ -296,4 +296,13 @@ class ThemeController extends Controller
             'status' => true
         ]);
     }
+    public function getBg(Request $request){
+                $webConfig = WebConfig::where("uid", $request->header("uid"))->first();
+        return  response()->json([
+            "message" => "Webconfig fetched Successfully",
+            "data" => $webConfig,
+            'status' => true
+        ]);
+
+    }
 }
