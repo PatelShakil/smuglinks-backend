@@ -29,7 +29,7 @@ class UserController extends Controller
         $webConfig->save();
 
         $user = UserMst::where("username",$request->username)
-        ->with(["links.views","products.images","subscriptions","settings","webConfig"])->first();
+        ->with(["links.views","products.images","subscriptions","settings","webConfig.font"])->first();
         return response()->json([
             "status"=>true,
             "message"=>"User Found",
