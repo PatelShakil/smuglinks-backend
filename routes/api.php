@@ -37,6 +37,7 @@ Route::group(['middleware' => "api"], (function () {
         Route::get('/theme/get-all', [ThemeController::class, 'getAllTheme']);
         Route::post('/theme/select-theme', [ThemeController::class, 'selectTheme']);
         Route::post('/bg/set-bg', [ThemeController::class, 'setBg']);
+        Route::get('/bg/get-bg', [ThemeController::class, 'getBg']);
         Route::post('/btn/set-btn', [WebButtonController::class, 'setButton']);
         Route::get('/fonts/get-all', [WebButtonController::class, 'getFonts']);
         Route::post('/fonts/set-font', [WebButtonController::class, 'selectFont']);
